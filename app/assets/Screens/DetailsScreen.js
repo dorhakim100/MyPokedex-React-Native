@@ -13,6 +13,8 @@ import {
   Keyboard,
 } from 'react-native'
 
+import { LinearGradient } from 'react-native-svg'
+
 import { useHeaderHeight } from '@react-navigation/elements'
 
 import SearchInput from '../cmps/SearchInput'
@@ -34,7 +36,7 @@ function DetailsScreen({ navigation }) {
   const [keyboardOffset, setKeyboardOffset] = useState(0)
 
   const [currPokemon, setCurrPokemon] = useState({
-    _id: `1Id`,
+    _id: 1,
     num: 1,
     name: 'Bulbasaur',
     types: ['grass', 'poison'],
@@ -49,7 +51,7 @@ function DetailsScreen({ navigation }) {
 
   const pokemons = [
     {
-      _id: `1Id`,
+      _id: 1,
       num: 1,
       name: 'Bulbasaur',
       types: ['grass', 'poison'],
@@ -62,7 +64,7 @@ function DetailsScreen({ navigation }) {
       },
     },
     {
-      _id: `2Id`,
+      _id: 2,
       num: 2,
       name: 'Ivysaur',
       types: ['grass', 'poison'],
@@ -76,9 +78,9 @@ function DetailsScreen({ navigation }) {
       },
     },
     {
-      _id: `3Id`,
+      _id: 3,
       num: 3,
-      name: 'Ivysaur',
+      name: 'Venusaur',
       types: ['grass', 'poison'],
       entry:
         'The plant blooms when it is absorbing solar energy. It stays on the move to seek sunlight.',
@@ -90,7 +92,7 @@ function DetailsScreen({ navigation }) {
       },
     },
     {
-      _id: `4Id`,
+      _id: 4,
       num: 4,
       name: 'Charmander',
       types: ['fire'],
@@ -101,6 +103,76 @@ function DetailsScreen({ navigation }) {
           'https://archives.bulbagarden.net/media/upload/thumb/2/27/0004Charmander.png/500px-0004Charmander.png',
         pixel:
           'https://archives.bulbagarden.net/media/upload/6/6f/Spr_2g_004.png',
+      },
+    },
+    {
+      _id: 5,
+      num: 5,
+      name: 'Charmeleon',
+      types: ['fire'],
+      entry:
+        'When it swings its burning tail, it elevates the temperature to unbearably high levels.',
+      sprites: {
+        picture:
+          'https://archives.bulbagarden.net/media/upload/thumb/0/05/0005Charmeleon.png/500px-0005Charmeleon.png',
+        pixel:
+          'https://archives.bulbagarden.net/media/upload/f/f3/Spr_2g_005.png',
+      },
+    },
+    {
+      _id: 6,
+      num: 6,
+      name: 'Charizard',
+      types: ['fire', 'flying'],
+      entry:
+        'Spits fire that is hot enough to melt boulders. Known to cause forest fires unintentionally.',
+      sprites: {
+        picture:
+          'https://archives.bulbagarden.net/media/upload/thumb/3/38/0006Charizard.png/500px-0006Charizard.png',
+        pixel:
+          'https://archives.bulbagarden.net/media/upload/c/cc/Spr_2g_006.png',
+      },
+    },
+    {
+      _id: 7,
+      num: 7,
+      name: 'Squirtle',
+      types: ['water'],
+      entry:
+        'After birth, its back swells and hardens into a shell. Powerfully sprays foam from its mouth.',
+      sprites: {
+        picture:
+          'https://archives.bulbagarden.net/media/upload/thumb/5/54/0007Squirtle.png/500px-0007Squirtle.png',
+        pixel:
+          'https://archives.bulbagarden.net/media/upload/3/34/Spr_2g_007.png',
+      },
+    },
+    {
+      _id: 8,
+      num: 8,
+      name: 'Wartortle',
+      types: ['water'],
+      entry:
+        'It is recognized by its tail that is large and covered with a rich, thick fur. The tail becomes increasingly deeper in color as Wartortle ages.',
+      sprites: {
+        picture:
+          'https://archives.bulbagarden.net/media/upload/thumb/0/0f/0008Wartortle.png/500px-0008Wartortle.png',
+        pixel:
+          'https://archives.bulbagarden.net/media/upload/6/63/Spr_2g_008.png',
+      },
+    },
+    {
+      _id: 9,
+      num: 9,
+      name: 'Blastoise',
+      types: ['water'],
+      entry:
+        'It deliberately makes itself heavy so it can withstand the recoil of the water jets it fires.',
+      sprites: {
+        picture:
+          'https://archives.bulbagarden.net/media/upload/thumb/0/0a/0009Blastoise.png/500px-0009Blastoise.png',
+        pixel:
+          'https://archives.bulbagarden.net/media/upload/c/c8/Spr_2g_009.png',
       },
     },
   ]
@@ -139,10 +211,15 @@ function DetailsScreen({ navigation }) {
           <Button
             disabled={currPokemon.num === 1}
             title='Previous'
-            onPress={() => navigation.navigate('Details')}
+            onPress={() => setPokemon(--currPokemon._id)}
           />
-          <Button title='Next' onPress={() => navigation.navigate('Details')} />
+          <Button
+            title='Next'
+            disabled={currPokemon.num === pokemons.length}
+            onPress={() => setPokemon(++currPokemon._id)}
+          />
         </View>
+
         <PokemonContainer onPress={dismissKeyboard} currPokemon={currPokemon} />
 
         <SearchInput onSubmit={handleSearchSubmit} />

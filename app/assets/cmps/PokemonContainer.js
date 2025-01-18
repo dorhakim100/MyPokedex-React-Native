@@ -12,11 +12,11 @@ import {
 import Types from './Types'
 
 import { capitalizeFirstLetter, getFormattedNum } from '../services/utils'
+import { LinearGradient } from 'react-native-svg'
 
 const screenWidth = Dimensions.get('window').width
 
 const PokemonContainer = ({ currPokemon, onPress }) => {
-  console.log(currPokemon)
   return (
     <TouchableWithoutFeedback onPress={onPress}>
       <View style={styles.container}>
