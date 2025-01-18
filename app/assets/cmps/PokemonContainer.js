@@ -1,29 +1,44 @@
 import React, { useState } from 'react'
-import { View, Text, Image, StyleSheet, Button, Dimensions } from 'react-native'
+import {
+  View,
+  Text,
+  Image,
+  StyleSheet,
+  Button,
+  Dimensions,
+  TouchableWithoutFeedback,
+} from 'react-native'
 
 import Types from './Types'
 
+import { capitalizeFirstLetter, getFormattedNum } from '../services/utils'
+
 const screenWidth = Dimensions.get('window').width
 
-const PokemonContainer = ({ onSubmit }) => {
+const PokemonContainer = ({ currPokemon, onPress }) => {
+  console.log(currPokemon)
   return (
-    <View style={styles.container}>
-      <Image
-        source={require('../imgs/bulbasaur.jpeg')}
-        style={styles.spriteImg}
-      ></Image>
-      <View style={styles.nameContainer}>
-        <Text style={styles.name}>#1</Text>
-        <Text style={styles.name}>Bulbasaur</Text>
+    <TouchableWithoutFeedback onPress={onPress}>
+      <View style={styles.container}>
+        <Image
+          source={{ uri: currPokemon.sprites.picture }}
+          style={styles.spriteImg}
+        ></Image>
+        <View style={styles.nameContainer}>
+          <Text style={styles.name}>{getFormattedNum(currPokemon.num)}</Text>
+          <Text style={styles.name}>
+            {capitalizeFirstLetter(currPokemon.name)}
+          </Text>
+        </View>
+        <Types types={currPokemon.types} />
       </View>
-      <Types types={['grass', 'poison']} />
-    </View>
+    </TouchableWithoutFeedback>
   )
 }
 
 const styles = StyleSheet.create({
   container: {
-    gap: 5,
+    // gap: 5,
     alignItems: 'center',
     width: screenWidth,
   },
@@ -35,12 +50,12 @@ const styles = StyleSheet.create({
 
   spriteImg: {
     width: screenWidth * 0.8,
-
     height: screenWidth * 0.8,
   },
 
   name: {
-    fontSize: '20',
+    fontWeight: 'bold',
+    fontSize: 20,
   },
 })
 

@@ -11,3 +11,14 @@ export function makeId(length = 5) {
   }
   return text
 }
+
+export const getFormattedNum = (num) => {
+  num += ''
+  if (num.length === 1) {
+    return `#000${num}`
+  } else if (num.length === 2) {
+    return `#00${num}`
+  } else if (num.length === 3) {
+    return `#0${num}`
+  } else return `#${num}`
+}

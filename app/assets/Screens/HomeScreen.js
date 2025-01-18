@@ -14,8 +14,9 @@ import { StyleSheet } from 'react-native'
 
 function HomeScreen({ navigation }) {
   return (
-    <SafeAreaView style={styles.container}>
+    <View style={styles.container}>
       <TouchableOpacity onPress={() => navigation.navigate('Details')}>
+        {/* <TouchableOpacity onPress={() => navigation.navigate('Form')}> */}
         <View style={styles.logoContainer}>
           <Image
             source={require('../imgs/pokeball.png')}
@@ -26,7 +27,7 @@ function HomeScreen({ navigation }) {
       </TouchableOpacity>
 
       <StatusBar style='auto' />
-    </SafeAreaView>
+    </View>
   )
 }
 

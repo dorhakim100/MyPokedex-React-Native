@@ -5,7 +5,6 @@ import { capitalizeFirstLetter } from '../services/utils'
 const screenWidth = Dimensions.get('window').width
 
 function Types({ types, isSprite }) {
-  console.log(types)
   // const grass = require('../imgs/types/png/Pokemon_Type_Icon_Grass.png')
 
   const [pngTypes, setPngTypes] = useState([])
@@ -67,9 +66,10 @@ function Types({ types, isSprite }) {
 
   return (
     <View style={{ ...styles.container, gap: isSprite ? 5 : 15 }}>
-      {pngTypes.map((type) => {
+      {pngTypes.map((type, index) => {
         return (
           <Image
+            key={index}
             source={type}
             style={isSprite ? styles.sprite : styles.picture}
           ></Image>
@@ -82,7 +82,7 @@ function Types({ types, isSprite }) {
 const styles = StyleSheet.create({
   container: {
     paddingTop: 10,
-    justifyContent: 'flex-end',
+    justifyContent: 'flex-start',
     alignItems: 'center',
 
     flexDirection: 'row',
