@@ -19,6 +19,10 @@ const colors = {
   rock: '#b6a136',
   steel: 'rgb(206, 220, 223)',
   water: 'rgb(116, 126, 234)',
+  mainRed: '#ee1515',
+  secondaryBlue: '#3B4CCA',
+  mainRedLight: '#f8b3b3',
+  secondaryBlueLight: '#a4b0e5',
 }
 
 export default colors

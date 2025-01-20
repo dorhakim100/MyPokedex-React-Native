@@ -7,6 +7,7 @@ import {
   Button,
   Dimensions,
   TouchableWithoutFeedback,
+  Platform,
 } from 'react-native'
 
 import Types from './Types'
@@ -41,6 +42,10 @@ const styles = StyleSheet.create({
     // gap: 5,
     alignItems: 'center',
     width: screenWidth,
+    shadowColor: 'gray',
+    shadowOffset: { width: 10, heigh: 10 },
+    shadowOpacity: 0.5,
+    elevation: 20, // shadow for android users
   },
 
   nameContainer: {
@@ -56,6 +61,21 @@ const styles = StyleSheet.create({
   name: {
     fontWeight: 'bold',
     fontSize: 20,
+    // fontFamily: 'Courier', // for ios only
+    // fontFamily: 'Roboto', // for android only
+    // fontFamily: Platform.OS === 'ios' ? 'Avenir' : 'Roboto',
+    // or using a dedicated props
+    ...Platform.select({
+      ios: {
+        fontFamily: 'Avenir',
+        // color: 'crimson',
+      },
+      android: {
+        fontFamily: 'Roboto',
+
+        // color: 'royalblue',
+      },
+    }),
   },
 })
 

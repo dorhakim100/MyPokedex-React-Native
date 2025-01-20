@@ -1,5 +1,19 @@
 import React, { useState } from 'react'
-import { View, TextInput, StyleSheet, Button } from 'react-native'
+import {
+  View,
+  TextInput,
+  StyleSheet,
+  Button,
+  TouchableOpacity,
+  Text,
+  Platform,
+} from 'react-native'
+import MaterialIcons from '@expo/vector-icons/MaterialIcons'
+import AntDesign from '@expo/vector-icons/AntDesign'
+
+import CustomButton from './CustomButton'
+
+import colors from '../config/color'
 
 const SearchInput = ({ onSubmit }) => {
   const [query, setQuery] = useState('')
@@ -11,15 +25,21 @@ const SearchInput = ({ onSubmit }) => {
 
   return (
     <View style={styles.container}>
+      <MaterialIcons name='catching-pokemon' size={30} color={colors.mainRed} />
       <TextInput
         style={styles.input}
         value={query}
         onChangeText={setQuery}
-        placeholder='Search here...'
+        placeholder={`Search here...`}
         returnKeyType='search'
         onSubmitEditing={handleSearch}
       />
-      <Button title='Search' onPress={handleSearch} />
+      {/* <TouchableOpacity style={styles.buttonContainer} onPress={handleSearch}>
+        <Text style={styles.buttonText}>Search</Text>
+      </TouchableOpacity> */}
+      <CustomButton handlePress={handleSearch} secondaryColor={true}>
+        Search
+      </CustomButton>
     </View>
   )
 }
@@ -28,6 +48,8 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
     padding: 10,
+    alignPokemons: 'center',
+    gap: 5,
   },
   input: {
     flex: 1,

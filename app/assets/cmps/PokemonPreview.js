@@ -1,5 +1,13 @@
 import React, { useState, useEffect } from 'react'
-import { View, Text, Image, StyleSheet, Button, Dimensions } from 'react-native'
+import {
+  View,
+  Text,
+  Image,
+  StyleSheet,
+  Button,
+  Dimensions,
+  Platform,
+} from 'react-native'
 import { capitalizeFirstLetter, getFormattedNum } from '../services/utils'
 
 import Types from './Types'
@@ -31,8 +39,12 @@ const styles = StyleSheet.create({
     // justifyContent: 'space-around',
     justifyContent: 'space-between',
     paddingBottom: 15,
-    alignItems: 'center',
+    alignPokemons: 'center',
     padding: 5,
+    shadowColor: 'gray',
+    shadowOffset: { width: 10, heigh: 10 },
+    shadowOpacity: 0.5,
+    backgroundColor: 'rgba(153, 231, 236, 0.19)',
   },
 
   num: {
@@ -41,6 +53,8 @@ const styles = StyleSheet.create({
 
   name: {
     fontWeight: 'bold',
+    fontWeight: '600',
+    fontFamily: Platform.OS === 'ios' ? 'Avenir' : 'Roboto',
   },
 
   sprite: {

@@ -1,14 +1,14 @@
 import { httpService } from '../http.service'
 import { makeId } from '../util.service'
 
-const KEY = 'item'
+const KEY = 'pokemon'
 
-export const itemService = {
+export const pokemonService = {
   query,
   getById,
   save,
   remove,
-  getEmptyItem,
+  getEmptyPokemon,
   getDefaultFilter,
   getMaxPage,
 }
@@ -24,18 +24,18 @@ async function query(
   }
 ) {
   try {
-    const items = await httpService.get(KEY, filterBy)
+    const pokemons = await httpService.get(KEY, filterBy)
 
-    return items
+    return pokemons
   } catch (err) {
     console.log(err)
     throw err
   }
 }
 
-async function getById(itemId, filter) {
+async function getById(pokemonId, filter) {
   try {
-    const res = await httpService.get(`${KEY}/${itemId}`, filter)
+    const res = await httpService.get(`${KEY}/${pokemonId}`, filter)
     return res
   } catch (err) {
     console.log(err)
@@ -43,30 +43,30 @@ async function getById(itemId, filter) {
   }
 }
 
-async function remove(itemId) {
+async function remove(pokemonId) {
   try {
-    return await httpService.delete(`${KEY}/${itemId}`)
+    return await httpService.delete(`${KEY}/${pokemonId}`)
   } catch (err) {
     console.log(err)
     throw err
   }
 }
-async function save(item) {
+async function save(pokemon) {
   try {
-    var savedItem
-    if (item._id) {
-      savedItem = await httpService.put(`${KEY}/${item._id}`, item)
+    var savedPokemon
+    if (pokemon._id) {
+      savedPokemon = await httpService.put(`${KEY}/${pokemon._id}`, pokemon)
     } else {
-      savedItem = await httpService.post(KEY, item)
+      savedPokemon = await httpService.post(KEY, pokemon)
     }
-    return savedItem
+    return savedPokemon
   } catch (err) {
     console.log(err)
     throw err
   }
 }
 
-function getEmptyItem() {
+function getEmptyPokemon() {
   return {
     _id: makeId(),
     price: '',
@@ -91,9 +91,9 @@ async function getMaxPage(filterBy) {
   const PAGE_SIZE = 6
 
   try {
-    var items = await query({ ...filterBy, isAll: true })
+    var pokemons = await query({ ...filterBy, isAll: true })
 
-    let maxPage = items.length / PAGE_SIZE
+    let maxPage = pokemons.length / PAGE_SIZE
     maxPage = Math.ceil(maxPage)
     return maxPage
   } catch (err) {

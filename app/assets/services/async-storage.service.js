@@ -7,7 +7,7 @@ export const storageService = {
 }
 
 function query(entityType, delay = 500) {
-  var entities = JSON.parse(localStorage.getItem(entityType)) || []
+  var entities = JSON.parse(localStorage.getPokemon(entityType)) || []
   return new Promise((resolve) => setTimeout(() => resolve(entities), delay))
 }
 
@@ -60,7 +60,7 @@ function remove(entityType, entityId) {
 // Private functions
 
 function _save(entityType, entities) {
-  localStorage.setItem(entityType, JSON.stringify(entities))
+  localStorage.setPokemon(entityType, JSON.stringify(entities))
 }
 
 function _makeId(length = 5) {
