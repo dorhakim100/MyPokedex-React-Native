@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import {
   View,
   TextInput,
@@ -9,8 +9,7 @@ import {
   Platform,
 } from 'react-native'
 import MaterialIcons from '@expo/vector-icons/MaterialIcons'
-import AntDesign from '@expo/vector-icons/AntDesign'
-
+import FontAwesome from '@expo/vector-icons/FontAwesome'
 import CustomButton from './CustomButton'
 
 import colors from '../config/color'
@@ -38,7 +37,7 @@ const SearchInput = ({ onSubmit }) => {
         <Text style={styles.buttonText}>Search</Text>
       </TouchableOpacity> */}
       <CustomButton handlePress={handleSearch} secondaryColor={true}>
-        Search
+        <FontAwesome name='search' size={24} color={colors.white} />{' '}
       </CustomButton>
     </View>
   )
@@ -48,7 +47,7 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
     padding: 10,
-    alignPokemons: 'center',
+    alignItems: 'center',
     gap: 5,
   },
   input: {

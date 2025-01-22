@@ -72,23 +72,24 @@ const styles = StyleSheet.create({
   },
   logo: {
     position: 'absolute',
-    top: 200,
+    top: 150,
     height: 200,
     width: 200,
     alignSelf: 'center',
   },
   logoText: {
     position: 'absolute',
-    top: 400,
+    top: 360,
     alignSelf: 'center',
     fontFamily: 'pokefont',
+    fontWeight: 700,
     fontSize: '30',
   },
 
   buttonsContainer: {
     flexDirection: 'row',
     position: 'absolute',
-    top: 450,
+    top: 420,
     alignSelf: 'center',
     gap: 5,
   },

@@ -14,6 +14,7 @@ import Types from './Types'
 
 import { capitalizeFirstLetter, getFormattedNum } from '../services/utils'
 import { LinearGradient } from 'react-native-svg'
+import colors from '../config/color'
 
 const screenWidth = Dimensions.get('window').width
 
@@ -26,10 +27,10 @@ const PokemonContainer = ({ currPokemon, onPress }) => {
           style={styles.spriteImg}
         ></Image>
         <View style={styles.nameContainer}>
-          <Text style={styles.name}>{getFormattedNum(currPokemon.num)}</Text>
           <Text style={styles.name}>
             {capitalizeFirstLetter(currPokemon.name)}
           </Text>
+          <Text style={styles.num}>{getFormattedNum(currPokemon.num)}</Text>
         </View>
         <Types types={currPokemon.types} />
       </View>
@@ -40,16 +41,25 @@ const PokemonContainer = ({ currPokemon, onPress }) => {
 const styles = StyleSheet.create({
   container: {
     // gap: 5,
+
     alignItems: 'center',
     width: screenWidth,
     shadowColor: 'gray',
-    shadowOffset: { width: 10, heigh: 10 },
-    shadowOpacity: 0.5,
+    shadowOffset: { width: 2, heigh: 0 },
+    shadowOpacity: 1,
     elevation: 20, // shadow for android users
+    backgroundColor: colors.whiteBackground,
+    borderRadius: 15,
+    padding: 10,
+    marginTop: 5,
+    marginBottom: 5,
+    width: screenWidth * 0.9,
+
+    alignSelf: 'center',
   },
 
   nameContainer: {
-    flexDirection: 'row',
+    // flexDirection: 'row',
     gap: 5,
   },
 
@@ -60,7 +70,7 @@ const styles = StyleSheet.create({
 
   name: {
     fontWeight: 'bold',
-    fontSize: 20,
+    fontSize: 25,
     // fontFamily: 'Courier', // for ios only
     // fontFamily: 'Roboto', // for android only
     // fontFamily: Platform.OS === 'ios' ? 'Avenir' : 'Roboto',
@@ -76,6 +86,10 @@ const styles = StyleSheet.create({
         // color: 'royalblue',
       },
     }),
+  },
+  num: {
+    textAlign: 'center',
+    fontSize: 15,
   },
 })
 

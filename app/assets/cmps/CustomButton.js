@@ -11,10 +11,16 @@ import {
 
 import colors from '../config/color'
 
-function CustomButton({ children, handlePress, secondaryColor, disabled }) {
-  console.log(colors)
+function CustomButton({
+  children,
+  handlePress,
+  secondaryColor,
+  disabled,
+  style,
+}) {
   const buttonContainer = {
     borderRadius: 30,
+
     padding: 10,
     shadowColor: colors.black,
     shadowOffset: { width: 1, heigh: 1 },
@@ -33,7 +39,8 @@ function CustomButton({ children, handlePress, secondaryColor, disabled }) {
       onPress={handlePress}
       disabled={disabled}
     >
-      <Text style={styles.buttonText}>{children}</Text>
+      {/* giving CustomButton style directly from parent */}
+      <Text style={[styles.buttonText, style]}>{children}</Text>
     </TouchableOpacity>
   )
 }

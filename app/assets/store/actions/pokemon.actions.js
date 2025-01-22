@@ -1,16 +1,16 @@
 import { pokemonService } from '../../services/pokemon/pokemon.service'
 import { store } from '../store'
-import { SET_POKEMON } from '../reducers/pokemon.reducer'
+import { SET_POKEMON, SET_POKEMONS } from '../reducers/pokemon.reducer'
 
 export async function loadPokemons(filterBy) {
   try {
     const pokemons = await pokemonService.query(filterBy)
 
     store.dispatch({
-      type: SET_ITEMS,
+      type: SET_POKEMONS,
       pokemons,
     })
-    store.dispatch({ type: SET_ITEM_FILTER, filter: filterBy })
+    // store.dispatch({ type: SET_ITEM_FILTER, filter: filterBy })
     return pokemons
   } catch (err) {
     // console.log('Cannot load pokemons', err)

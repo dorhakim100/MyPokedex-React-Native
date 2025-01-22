@@ -12,6 +12,7 @@ import {
   TouchableWithoutFeedback,
   TouchableOpacity,
   Keyboard,
+  FlatList,
 } from 'react-native'
 
 import { LinearGradient } from 'react-native-svg'
@@ -22,9 +23,12 @@ import SearchInput from '../cmps/SearchInput'
 import PokemonContainer from '../cmps/PokemonContainer'
 import PokemonPreview from '../cmps/PokemonPreview'
 import CustomButton from '../cmps/CustomButton'
+import ListItemSeparator from '../cmps/ListItemSeparator'
 
 import { makeId } from '../services/utils'
-import { loadPokemon } from '../store/actions/pokemon.actions'
+import { pokemonService } from '../services/pokemon/pokemon.service'
+import { loadPokemon, loadPokemons } from '../store/actions/pokemon.actions'
+import colors from '../config/color'
 
 const screenWidth = Dimensions.get('window').width
 const screenHeight = Dimensions.get('window').height
@@ -36,9 +40,15 @@ function ListScreen({ navigation }) {
     (stateSelector) => stateSelector.pokemonModule.pokemons
   )
 
+  const [filter, setFilter] = useState(pokemonService.getDefaultFilter())
+
+  useEffect(() => {
+    loadPokemons(filter)
+  }, [filter])
+
   const handleSearchSubmit = (query) => {
-    console.log('Searching for:', query)
-    // Handle the search logic or state update here
+    const filterBy = { ...filter, txt: query }
+    setFilter(filterBy)
   }
   const [keyboardOffset, setKeyboardOffset] = useState(0)
 
@@ -71,25 +81,8 @@ function ListScreen({ navigation }) {
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
         keyboardVerticalOffset={Platform.OS === 'ios' ? headerHeight : 0}
       >
-        {/* <View style={styles.prevNextButtons}>
-          <CustomButton
-            handlePress={() => setPokemon(--currPokemon._id)}
-            disabled={currPokemon.num === 1}
-          >
-            Previous
-          </CustomButton>
-          <CustomButton
-            handlePress={() => setPokemon(++currPokemon._id)}
-            disabled={currPokemon.num === pokemons.length}
-          >
-            Next
-          </CustomButton>
-        </View> */}
-
-        {/* <PokemonContainer onPress={dismissKeyboard} currPokemon={currPokemon} /> */}
-
         <SearchInput onSubmit={handleSearchSubmit} />
-        <ScrollView style={styles.scrollView}>
+        {/* <ScrollView style={styles.scrollView}>
           {pokemons.map((pokemon) => {
             return (
               <TouchableOpacity
@@ -101,7 +94,24 @@ function ListScreen({ navigation }) {
               </TouchableOpacity>
             )
           })}
-        </ScrollView>
+        </ScrollView> */}
+        {/* or using FlatList */}
+        <FlatList
+          data={pokemons}
+          keyExtractor={(item) => item._id.toString()} // Ensure unique IDs
+          renderItem={({ item }) => (
+            <TouchableOpacity
+              onPress={() => setPokemon(item._id)}
+              style={styles.preview}
+            >
+              <PokemonPreview pokemon={item} />
+            </TouchableOpacity>
+          )}
+          contentContainerStyle={styles.listContainer}
+          ItemSeparatorComponent={
+            <ListItemSeparator color={colors.secondaryBlueLight} />
+          }
+        />
       </KeyboardAvoidingView>
     </SafeAreaView>
   )
@@ -128,8 +138,8 @@ const styles = StyleSheet.create({
   },
 
   preview: {
-    borderBottomWidth: 0.3,
-    borderColor: 'dodgerblue',
+    // borderBottomWidth: 0.3,
+    // borderColor: 'dodgerblue',
   },
 })
 

@@ -22,43 +22,18 @@ export const pokemonService = {
 }
 window.cs = pokemonService
 
-async function query(filterBy = { txt: '', price: 0, types: [] }) {
-  var pokemons = await storageService.query(STORAGE_KEY)
-  const { txt, maxPrice, sortDir, types, pageIdx, isAll } = filterBy
-
-  if (isAll) {
-    return pokemons
-  }
+async function query(filterBy = { txt: '' }) {
+  var pokemons = getPokemons()
+  const { txt } = filterBy
 
   if (txt) {
     const regex = new RegExp(filterBy.txt, 'i')
     pokemons = pokemons.filter(
       (pokemon) =>
-        regex.test(pokemon.title.he) ||
-        regex.test(pokemon.title.eng) ||
-        regex.test(pokemon.description.he) ||
-        regex.test(pokemon.description.eng)
+        regex.test(pokemon.name) ||
+        regex.test(pokemon.num) ||
+        regex.test(pokemon.entry)
     )
-  }
-  if (maxPrice) {
-    pokemons = pokemons.filter((pokemon) => pokemon.price <= maxPrice)
-  }
-
-  if (types.length > 0) {
-    pokemons = pokemons.filter((pokemon) =>
-      types.some((type) => pokemon.types.includes(type))
-    )
-  }
-
-  if (sortDir) {
-    pokemons.sort(
-      (pokemon1, pokemon2) => (pokemon1.price - pokemon2.price) * +sortDir
-    )
-  }
-
-  if (pageIdx !== undefined) {
-    const startIdx = pageIdx * PAGE_SIZE
-    pokemons = pokemons.slice(startIdx, startIdx + PAGE_SIZE)
   }
 
   return pokemons
@@ -103,16 +78,16 @@ async function save(pokemon) {
 
 function getEmptyPokemon() {
   return {
-    _id: makeId(),
-    num: 0,
-    name: '',
-    types: [''],
-    entry: '',
+    _id: 1,
+    num: 1,
+    name: 'Bulbasaur',
+    types: ['grass', 'poison'],
+    entry:
+      'A strange seed was planted on its back at birth. The plant sprouts and grows with this Pokémon.',
     sprites: {
       picture:
-        'https://archives.bulbagarden.net/media/upload/thumb/0/0a/0009Blastoise.png/500px-0009Blastoise.png',
-      pixel:
-        'https://archives.bulbagarden.net/media/upload/c/c8/Spr_2g_009.png',
+        'https://archives.bulbagarden.net/media/upload/thumb/f/fb/0001Bulbasaur.png/500px-0001Bulbasaur.png',
+      pixel: 'https://art.pixilart.com/20dc875b721fed5.png',
     },
   }
 }
@@ -251,10 +226,8 @@ function getPokemons() {
 function getDefaultFilter() {
   return {
     txt: '',
-    maxPrice: '',
-    sortDir: '',
+
     types: [],
-    pageIdx: 0,
   }
 }
 

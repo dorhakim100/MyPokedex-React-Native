@@ -23,6 +23,7 @@ const colors = {
   secondaryBlue: '#3B4CCA',
   mainRedLight: '#f8b3b3',
   secondaryBlueLight: '#a4b0e5',
+  whiteBackground: '#f8f4f4',
 }
 
 export default colors

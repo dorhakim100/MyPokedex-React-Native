@@ -8,12 +8,14 @@ import {
   Image,
   ImageBackground,
   Dimensions,
+  Platform,
 } from 'react-native'
 
 import { useSelector } from 'react-redux'
 import { loadPokemon } from '../store/actions/pokemon.actions'
 
 import { StatusBar } from 'react-native'
+import Constants from 'expo-constants'
 
 import { StyleSheet } from 'react-native'
 
@@ -46,6 +48,9 @@ function DetailsScreen() {
       </View>
 
       <PokemonContainer currPokemon={currPokemon} />
+      <View style={styles.textContainer}>
+        <Text style={styles.text}>{currPokemon.entry}</Text>
+      </View>
     </SafeAreaView>
   )
 }
@@ -54,6 +59,10 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     // alignItems: 'center',
+    alignSelf: 'center',
+    width: '90%',
+    // paddingTop: Platform.OS === 'android' ? Constants.StatusBarHeight : 0, // for android users, add padding equal to statusBar
+    paddingTop: Constants.statusBarHeight, // if SafeAreaView is container, it will take affect only for android users, add padding equal to statusBar
   },
   prevNextButtons: {
     padding: 5,
@@ -61,6 +70,12 @@ const styles = StyleSheet.create({
     // paddingTop: 10,
     justifyContent: 'space-around',
     width: screenWidth,
+  },
+
+  textContainer: {},
+  text: {
+    fontSize: 20,
+    textAlign: 'justify',
   },
 })
 
