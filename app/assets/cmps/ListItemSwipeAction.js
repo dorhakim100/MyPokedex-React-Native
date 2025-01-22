@@ -4,12 +4,19 @@ import React from 'react'
 import { MaterialCommunityIcons } from '@expo/vector-icons'
 
 import colors from '../config/color'
+import { TouchableWithoutFeedback } from 'react-native'
 
-function ListItemSwipeAction() {
+function ListItemSwipeAction({ onPress }) {
   return (
-    <View style={styles.container}>
-      <MaterialCommunityIcons name='trash-can' color={colors.white} size={35} />
-    </View>
+    <TouchableWithoutFeedback onPress={onPress}>
+      <View style={styles.container}>
+        <MaterialCommunityIcons
+          name='trash-can'
+          color={colors.white}
+          size={35}
+        />
+      </View>
+    </TouchableWithoutFeedback>
   )
 }
 

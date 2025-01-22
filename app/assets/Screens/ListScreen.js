@@ -29,7 +29,11 @@ import ListItemSwipeAction from '../cmps/ListItemSwipeAction'
 
 import { makeId } from '../services/utils'
 import { pokemonService } from '../services/pokemon/pokemon.service'
-import { loadPokemon, loadPokemons } from '../store/actions/pokemon.actions'
+import {
+  loadPokemon,
+  loadPokemons,
+  removePokemon,
+} from '../store/actions/pokemon.actions'
 import colors from '../config/color'
 
 const screenWidth = Dimensions.get('window').width
@@ -75,7 +79,11 @@ function ListScreen({ navigation }) {
     loadPokemon(pokemonId)
     navigation.navigate('Details')
   }
-  console.log(colors)
+
+  const handleDelete = (pokemon) => {
+    const pokemonId = pokemon._id
+    removePokemon(pokemonId)
+  }
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
@@ -105,7 +113,9 @@ function ListScreen({ navigation }) {
           renderItem={({ item }) => (
             <PokemonPreview
               pokemon={item}
-              renderRightAction={ListItemSwipeAction} // sending a function, not cmp
+              renderRightAction={() => (
+                <ListItemSwipeAction onPress={() => handleDelete(item)} />
+              )} // sending a function, not cmp
               setPokemon={setPokemon}
             />
           )}

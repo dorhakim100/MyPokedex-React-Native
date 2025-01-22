@@ -1,6 +1,10 @@
 import { pokemonService } from '../../services/pokemon/pokemon.service'
 import { store } from '../store'
-import { SET_POKEMON, SET_POKEMONS } from '../reducers/pokemon.reducer'
+import {
+  SET_POKEMON,
+  SET_POKEMONS,
+  REMOVE_POKEMON,
+} from '../reducers/pokemon.reducer'
 
 export async function loadPokemons(filterBy) {
   try {
@@ -29,6 +33,17 @@ export async function loadPokemon(pokemonId) {
     return pokemon
   } catch (err) {
     // console.log('Cannot load pokemon', err)
+    throw err
+  }
+}
+
+export function removePokemon(pokemonId) {
+  try {
+    store.dispatch({
+      type: REMOVE_POKEMON,
+      pokemonId,
+    })
+  } catch (err) {
     throw err
   }
 }
