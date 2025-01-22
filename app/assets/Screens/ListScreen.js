@@ -13,6 +13,7 @@ import {
   TouchableOpacity,
   Keyboard,
   FlatList,
+  TouchableHighlight,
 } from 'react-native'
 
 import { LinearGradient } from 'react-native-svg'
@@ -24,6 +25,7 @@ import PokemonContainer from '../cmps/PokemonContainer'
 import PokemonPreview from '../cmps/PokemonPreview'
 import CustomButton from '../cmps/CustomButton'
 import ListItemSeparator from '../cmps/ListItemSeparator'
+import ListItemSwipeAction from '../cmps/ListItemSwipeAction'
 
 import { makeId } from '../services/utils'
 import { pokemonService } from '../services/pokemon/pokemon.service'
@@ -73,6 +75,7 @@ function ListScreen({ navigation }) {
     loadPokemon(pokemonId)
     navigation.navigate('Details')
   }
+  console.log(colors)
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
@@ -100,12 +103,11 @@ function ListScreen({ navigation }) {
           data={pokemons}
           keyExtractor={(item) => item._id.toString()} // Ensure unique IDs
           renderItem={({ item }) => (
-            <TouchableOpacity
-              onPress={() => setPokemon(item._id)}
-              style={styles.preview}
-            >
-              <PokemonPreview pokemon={item} />
-            </TouchableOpacity>
+            <PokemonPreview
+              pokemon={item}
+              renderRightAction={ListItemSwipeAction} // sending a function, not cmp
+              setPokemon={setPokemon}
+            />
           )}
           contentContainerStyle={styles.listContainer}
           ItemSeparatorComponent={

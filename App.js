@@ -19,6 +19,7 @@ import {
   SafeAreaView,
   Image,
 } from 'react-native'
+import { GestureHandlerRootView } from 'react-native-gesture-handler'
 
 import CustomBottomNavigation from './app/assets/cmps/BottomNavigation.js'
 
@@ -27,18 +28,20 @@ const Stack = createStackNavigator()
 export default function App() {
   return (
     <Provider store={store}>
-      <PaperProvider>
-        <NavigationContainer>
-          <SafeAreaView>
-            {/* <Stack.Navigator initialRouteName='Home'>
+      <GestureHandlerRootView>
+        <PaperProvider>
+          <NavigationContainer>
+            <SafeAreaView>
+              {/* <Stack.Navigator initialRouteName='Home'>
             <Stack.Screen name='Home' component={HomeScreen} />
             <Stack.Screen name='List' component={ListScreen} />
             <Stack.Screen name='Details' component={DetailsScreen} />
           </Stack.Navigator> */}
-          </SafeAreaView>
-          <CustomBottomNavigation />
-        </NavigationContainer>
-      </PaperProvider>
+            </SafeAreaView>
+            <CustomBottomNavigation />
+          </NavigationContainer>
+        </PaperProvider>
+      </GestureHandlerRootView>
     </Provider>
   )
 }
