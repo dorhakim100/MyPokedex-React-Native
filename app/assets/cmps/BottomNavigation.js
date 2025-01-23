@@ -11,6 +11,7 @@ import Feather from '@expo/vector-icons/Feather'
 import ListScreen from '../Screens/ListScreen'
 import HomeScreen from '../Screens/HomeScreen'
 import DetailsScreen from '../Screens/DetailsScreen'
+import AccountScreen from '../Screens/AccountScreen'
 
 import colors from '../config/color'
 
@@ -69,8 +70,14 @@ export default function CustomBottomNavigation() {
         component={HomeScreen}
         options={{
           tabBarLabel: 'Home',
-          tabBarIcon: ({ color, size }) => {
-            return <Icon name='home' size={size} color={color} />
+          tabBarIcon: ({ color, size, focused }) => {
+            return (
+              <Icon
+                name='home'
+                size={size}
+                color={focused ? colors.mainRed : color}
+              />
+            )
           },
         }}
       />
@@ -79,8 +86,14 @@ export default function CustomBottomNavigation() {
         component={ListScreen}
         options={{
           tabBarLabel: 'List',
-          tabBarIcon: ({ color, size }) => {
-            return <Feather name='list' size={size} color={color} />
+          tabBarIcon: ({ color, size, focused }) => {
+            return (
+              <Feather
+                name='list'
+                size={size}
+                color={focused ? colors.mainRed : color}
+              />
+            )
           },
         }}
       />
@@ -93,6 +106,22 @@ export default function CustomBottomNavigation() {
             return (
               <MaterialIcons
                 name='catching-pokemon'
+                size={size}
+                color={focused ? colors.mainRed : color}
+              />
+            )
+          },
+        }}
+      />
+      <Tab.Screen
+        name='Account'
+        component={AccountScreen}
+        options={{
+          tabBarLabel: 'Account',
+          tabBarIcon: ({ focused, color, size }) => {
+            return (
+              <MaterialIcons
+                name='account-circle'
                 size={size}
                 color={focused ? colors.mainRed : color}
               />

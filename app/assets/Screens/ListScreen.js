@@ -48,6 +48,7 @@ function ListScreen({ navigation }) {
 
   const [filter, setFilter] = useState(pokemonService.getDefaultFilter())
 
+  const [isRefreshing, setIsRefreshing] = useState(false)
   useEffect(() => {
     loadPokemons(filter)
   }, [filter])
@@ -110,6 +111,10 @@ function ListScreen({ navigation }) {
         <FlatList
           data={pokemons}
           keyExtractor={(item) => item._id.toString()} // Ensure unique IDs
+          refreshing={isRefreshing}
+          onRefresh={() => {
+            loadPokemons(pokemonService.getDefaultFilter())
+          }}
           renderItem={({ item }) => (
             <PokemonPreview
               pokemon={item}

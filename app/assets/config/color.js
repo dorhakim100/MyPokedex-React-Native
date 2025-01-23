@@ -24,8 +24,10 @@ const colors = {
   mainRedLight: '#f8b3b3',
   secondaryBlueLight: '#a4b0e5',
   whiteBackground: '#f8f4f4',
+  strongWhite: '#FFFFFF',
   blueHighlight: 'rgba(153, 231, 236, 0.19)',
   danger: '#ff5252',
+  subText: '#4F4F4F',
 }
 
 export default colors
