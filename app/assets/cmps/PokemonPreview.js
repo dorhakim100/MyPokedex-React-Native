@@ -73,6 +73,8 @@ const styles = StyleSheet.create({
     backgroundColor: defaultStyles.colors.whiteBackground,
   },
 
+  preview: {},
+
   num: {
     ...defaultStyles.text,
     fontSize: 15,

@@ -1,8 +1,16 @@
 import { StyleSheet, Text, View, Platform } from 'react-native'
 import React from 'react'
 
-export default function CustomText({ children, style }) {
-  console.log(style)
+import defaultStyles from '../config/styles'
+
+export default function CustomText({
+  children,
+  style = {
+    color: defaultStyles.colors.darkGray,
+    fontSize: 14,
+    fontWeight: 500,
+  },
+}) {
   const { color, fontSize, fontWeight } = style
 
   return (

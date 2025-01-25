@@ -29,19 +29,20 @@ function DetailsScreen() {
   const currPokemon = useSelector(
     (stateSelector) => stateSelector.pokemonModule.currPokemon
   )
+  const pokemons = pokemonService.getPokemons()
 
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.prevNextButtons}>
         <CustomButton
           handlePress={() => loadPokemon(--currPokemon._id)}
-          disabled={currPokemon.num === 1}
+          disabled={currPokemon.num === pokemons[0].num}
         >
           Previous
         </CustomButton>
         <CustomButton
           handlePress={() => loadPokemon(++currPokemon._id)}
-          disabled={currPokemon.num === pokemonService.getPokemons().length}
+          disabled={currPokemon.num === pokemons[pokemons.length - 1].num}
         >
           Next
         </CustomButton>

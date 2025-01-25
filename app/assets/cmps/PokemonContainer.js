@@ -29,8 +29,8 @@ const PokemonContainer = ({ currPokemon, onPress }) => {
         <Image
           source={{
             uri: isShiny
-              ? currPokemon.sprites.picture.shiny
-              : currPokemon.sprites.picture.regular,
+              ? currPokemon.sprites.home
+              : currPokemon.sprites.artwork,
           }}
           style={styles.spriteImg}
         ></Image>

@@ -5,6 +5,7 @@ import {
   Button,
   TouchableWithoutFeedback,
   View,
+  FlatList,
 } from 'react-native'
 import React, { useState } from 'react'
 
@@ -12,11 +13,13 @@ import { MaterialCommunityIcons } from '@expo/vector-icons'
 
 import CustomText from './CustomText'
 import Screen from '../Screens/Screen'
+import PickerItem from './PickerItem'
 
 import defaultStyles from '../config/styles'
 
-export default function CustomPicker({ icon, placeholder, ...otherProps }) {
+export default function CustomPicker({ icon, placeholder, items }) {
   const [isModal, setIsModal] = useState(false)
+
   return (
     <>
       <TouchableWithoutFeedback onPress={() => setIsModal(true)}>
@@ -42,6 +45,19 @@ export default function CustomPicker({ icon, placeholder, ...otherProps }) {
       <Modal visible={isModal} animationType='slide'>
         <Screen>
           <Button title='Close' onPress={() => setIsModal(false)} />
+          <FlatList
+            data={items}
+            keyExtractor={(item) => item.value.toString()}
+            renderItem={({ item }) => (
+              <PickerItem
+                label={item.label}
+                onPress={() => {
+                  item.onPress(item.label.toLowerCase())
+                  setIsModal(false)
+                }}
+              />
+            )}
+          />
         </Screen>
       </Modal>
     </>

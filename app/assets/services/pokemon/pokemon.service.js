@@ -22,9 +22,9 @@ export const pokemonService = {
 }
 window.cs = pokemonService
 
-async function query(filterBy = { txt: '' }) {
+async function query(filterBy = { txt: '', region: 'all' }) {
   var pokemons = getPokemons()
-  const { txt } = filterBy
+  const { txt, region } = filterBy
 
   if (txt) {
     const regex = new RegExp(filterBy.txt, 'i')
@@ -34,6 +34,10 @@ async function query(filterBy = { txt: '' }) {
         regex.test(pokemon.num) ||
         regex.test(pokemon.entry)
     )
+  }
+
+  if (region !== 'all') {
+    pokemons = pokemons.filter((pokemon) => pokemon.region === region)
   }
 
   return pokemons
@@ -85,18 +89,18 @@ function getEmptyPokemon() {
     entry:
       'A strange seed was planted on its back at birth. The plant sprouts and grows with this Pokémon.',
     sprites: {
-      picture: {
-        regular:
-          'https://archives.bulbagarden.net/media/upload/thumb/f/fb/0001Bulbasaur.png/500px-0001Bulbasaur.png',
-        shiny:
-          'https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/7f7c594b-4131-4a46-a947-7f51c8aafb29/defi4x4-705f5a63-bb47-4d9b-aa0b-33931d5a4c75.png',
-      },
+      artwork:
+        'https://archives.bulbagarden.net/media/upload/thumb/f/fb/0001Bulbasaur.png/500px-0001Bulbasaur.png',
+      home: 'https://archives.bulbagarden.net/media/upload/thumb/9/9f/HOME0001.png/400px-HOME0001.png',
+
       pixel: 'https://art.pixilart.com/20dc875b721fed5.png',
     },
+    region: 'kanto',
   }
 }
 function getPokemons() {
   const pokemons = [
+    // Kanto starters
     {
       _id: 1,
       num: 1,
@@ -105,14 +109,13 @@ function getPokemons() {
       entry:
         'A strange seed was planted on its back at birth. The plant sprouts and grows with this Pokémon.',
       sprites: {
-        picture: {
-          regular:
-            'https://archives.bulbagarden.net/media/upload/thumb/f/fb/0001Bulbasaur.png/500px-0001Bulbasaur.png',
-          shiny:
-            'https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/7f7c594b-4131-4a46-a947-7f51c8aafb29/defi4x4-705f5a63-bb47-4d9b-aa0b-33931d5a4c75.png',
-        },
+        artwork:
+          'https://archives.bulbagarden.net/media/upload/thumb/f/fb/0001Bulbasaur.png/500px-0001Bulbasaur.png',
+        home: 'https://archives.bulbagarden.net/media/upload/thumb/9/9f/HOME0001.png/400px-HOME0001.png',
+
         pixel: 'https://art.pixilart.com/20dc875b721fed5.png',
       },
+      region: 'kanto',
     },
     {
       _id: 2,
@@ -122,15 +125,14 @@ function getPokemons() {
       entry:
         'When the bulb on its back grows large, it appears to lose the ability to stand on its hind legs.',
       sprites: {
-        picture: {
-          regular:
-            'https://archives.bulbagarden.net/media/upload/thumb/8/81/0002Ivysaur.png/500px-0002Ivysaur.png',
-          shiny:
-            'https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/7f7c594b-4131-4a46-a947-7f51c8aafb29/defi4y3-70dcadd5-3021-4bd9-be0b-8e76cb448d74.png',
-        },
+        artwork:
+          'https://archives.bulbagarden.net/media/upload/thumb/8/81/0002Ivysaur.png/500px-0002Ivysaur.png',
+        home: 'https://archives.bulbagarden.net/media/upload/thumb/8/8f/HOME0002.png/400px-HOME0002.png',
+
         pixel:
           'https://archives.bulbagarden.net/media/upload/a/a0/Spr_2g_002.png',
       },
+      region: 'kanto',
     },
     {
       _id: 3,
@@ -140,15 +142,14 @@ function getPokemons() {
       entry:
         'The plant blooms when it is absorbing solar energy. It stays on the move to seek sunlight.',
       sprites: {
-        picture: {
-          regular:
-            'https://archives.bulbagarden.net/media/upload/thumb/6/6b/0003Venusaur.png/500px-0003Venusaur.png',
-          shiny:
-            'https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/34949f93-8022-47ca-a20e-35d2b4f12c98/d6lyouw-c49d6881-8a90-4092-816c-995acca74c89.png',
-        },
+        artwork:
+          'https://archives.bulbagarden.net/media/upload/thumb/6/6b/0003Venusaur.png/500px-0003Venusaur.png',
+        home: 'https://archives.bulbagarden.net/media/upload/thumb/3/38/HOME0003.png/400px-HOME0003.png',
+
         pixel:
           'https://archives.bulbagarden.net/media/upload/6/64/Spr_2g_003.png',
       },
+      region: 'kanto',
     },
     {
       _id: 4,
@@ -158,15 +159,13 @@ function getPokemons() {
       entry:
         'Obviously prefers hot places. When it rains, steam is said to spout from the tip of its tail.',
       sprites: {
-        picture: {
-          regular:
-            'https://archives.bulbagarden.net/media/upload/thumb/2/27/0004Charmander.png/500px-0004Charmander.png',
-          shiny:
-            'https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/7f7c594b-4131-4a46-a947-7f51c8aafb29/defhvoy-6ddd5ee8-c255-46cb-9553-e8634f43156d.png',
-        },
+        artwork:
+          'https://archives.bulbagarden.net/media/upload/thumb/2/27/0004Charmander.png/500px-0004Charmander.png',
+        home: 'https://archives.bulbagarden.net/media/upload/thumb/7/7d/HOME0004.png/400px-HOME0004.png',
         pixel:
           'https://archives.bulbagarden.net/media/upload/6/6f/Spr_2g_004.png',
       },
+      region: 'kanto',
     },
     {
       _id: 5,
@@ -176,15 +175,14 @@ function getPokemons() {
       entry:
         'When it swings its burning tail, it elevates the temperature to unbearably high levels.',
       sprites: {
-        picture: {
-          regular:
-            'https://archives.bulbagarden.net/media/upload/thumb/0/05/0005Charmeleon.png/500px-0005Charmeleon.png',
-          shiny:
-            'https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/7f7c594b-4131-4a46-a947-7f51c8aafb29/defhvvz-4dd03a36-ef59-4835-adde-50bde03181d2.png',
-        },
+        artwork:
+          'https://archives.bulbagarden.net/media/upload/thumb/0/05/0005Charmeleon.png/500px-0005Charmeleon.png',
+        home: 'https://archives.bulbagarden.net/media/upload/thumb/9/94/HOME0005.png/400px-HOME0005.png',
+
         pixel:
           'https://archives.bulbagarden.net/media/upload/f/f3/Spr_2g_005.png',
       },
+      region: 'kanto',
     },
     {
       _id: 6,
@@ -194,15 +192,14 @@ function getPokemons() {
       entry:
         'Spits fire that is hot enough to melt boulders. Known to cause forest fires unintentionally.',
       sprites: {
-        picture: {
-          regular:
-            'https://archives.bulbagarden.net/media/upload/thumb/3/38/0006Charizard.png/500px-0006Charizard.png',
-          shiny:
-            'https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/7f7c594b-4131-4a46-a947-7f51c8aafb29/delpmav-730ef73a-1ee2-42f2-9875-3ef30a41a4c2.png',
-        },
+        artwork:
+          'https://archives.bulbagarden.net/media/upload/thumb/3/38/0006Charizard.png/500px-0006Charizard.png',
+        home: 'https://archives.bulbagarden.net/media/upload/thumb/c/cd/HOME0006.png/400px-HOME0006.png',
+
         pixel:
           'https://archives.bulbagarden.net/media/upload/c/cc/Spr_2g_006.png',
       },
+      region: 'kanto',
     },
     {
       _id: 7,
@@ -212,15 +209,14 @@ function getPokemons() {
       entry:
         'After birth, its back swells and hardens into a shell. Powerfully sprays foam from its mouth.',
       sprites: {
-        picture: {
-          regular:
-            'https://archives.bulbagarden.net/media/upload/thumb/5/54/0007Squirtle.png/500px-0007Squirtle.png',
-          shiny:
-            'https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/i/e48d6b9d-3b1d-46a0-a254-3a448ec3a8a5/ddhvmn2-9f4b92e7-9d40-49b1-b9cd-0119c3e23b68.png',
-        },
+        artwork:
+          'https://archives.bulbagarden.net/media/upload/thumb/5/54/0007Squirtle.png/500px-0007Squirtle.png',
+        home: 'https://archives.bulbagarden.net/media/upload/thumb/a/a9/HOME0007.png/400px-HOME0007.png',
+
         pixel:
           'https://archives.bulbagarden.net/media/upload/3/34/Spr_2g_007.png',
       },
+      region: 'kanto',
     },
     {
       _id: 8,
@@ -230,15 +226,14 @@ function getPokemons() {
       entry:
         'It is recognized by its tail that is large and covered with a rich, thick fur. The tail becomes increasingly deeper in color as Wartortle ages.',
       sprites: {
-        picture: {
-          regular:
-            'https://archives.bulbagarden.net/media/upload/thumb/0/0f/0008Wartortle.png/500px-0008Wartortle.png',
-          shiny:
-            'https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/7f7c594b-4131-4a46-a947-7f51c8aafb29/defi648-a995ef45-f4d9-4aed-943e-953b4f0e839f.png',
-        },
+        artwork:
+          'https://archives.bulbagarden.net/media/upload/thumb/0/0f/0008Wartortle.png/500px-0008Wartortle.png',
+        home: 'https://archives.bulbagarden.net/media/upload/thumb/b/be/HOME0008.png/400px-HOME0008.png',
+
         pixel:
           'https://archives.bulbagarden.net/media/upload/6/63/Spr_2g_008.png',
       },
+      region: 'kanto',
     },
     {
       _id: 9,
@@ -248,24 +243,169 @@ function getPokemons() {
       entry:
         'It deliberately makes itself heavy so it can withstand the recoil of the water jets it fires.',
       sprites: {
-        picture: {
-          regular:
-            'https://archives.bulbagarden.net/media/upload/thumb/0/0a/0009Blastoise.png/500px-0009Blastoise.png',
-          shiny:
-            'https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/7f7c594b-4131-4a46-a947-7f51c8aafb29/defi65b-2c7c4623-19b6-4fe5-86e4-3e265f77c16b.png',
-        },
+        artwork:
+          'https://archives.bulbagarden.net/media/upload/thumb/0/0a/0009Blastoise.png/500px-0009Blastoise.png',
+        home: 'https://archives.bulbagarden.net/media/upload/thumb/7/7a/HOME0009.png/400px-HOME0009.png',
+
         pixel:
           'https://archives.bulbagarden.net/media/upload/c/c8/Spr_2g_009.png',
       },
+      region: 'kanto',
+    },
+    // Johto starters
+    {
+      _id: 10,
+      num: 152,
+      name: 'Chikorita',
+      types: ['grass'],
+      entry:
+        'A sweet aroma gently wafts from the leaf on its head. It is docile and loves to soak up sun rays.',
+      sprites: {
+        pixel:
+          'https://archives.bulbagarden.net/media/upload/2/2c/Spr_2g_152.png',
+        artwork:
+          'https://archives.bulbagarden.net/media/upload/thumb/b/bc/0152Chikorita.png/500px-0152Chikorita.png',
+        home: 'https://archives.bulbagarden.net/media/upload/d/d6/HOME0152.png',
+      },
+      region: 'johto',
+    },
+    {
+      _id: 11,
+      num: 153,
+      name: 'Bayleef',
+      types: ['grass'],
+      entry:
+        'The scent of spices comes from around its neck. Somehow, sniffing it makes you want to fight.',
+      sprites: {
+        pixel:
+          'https://archives.bulbagarden.net/media/upload/0/0d/Spr_2g_153.png',
+        artwork:
+          'https://archives.bulbagarden.net/media/upload/thumb/8/85/0153Bayleef.png/500px-0153Bayleef.png',
+        home: 'https://archives.bulbagarden.net/media/upload/7/7d/HOME0153.png',
+      },
+      region: 'johto',
+    },
+    {
+      _id: 12,
+      num: 154,
+      name: 'Meganium',
+      types: ['grass'],
+      entry:
+        'The fragrance of Meganium’s flower soothes and calms emotions. It is said to have the ability to revive dead plants and flowers.',
+      sprites: {
+        pixel:
+          'https://archives.bulbagarden.net/media/upload/b/b6/Spr_2g_154.png',
+        artwork:
+          'https://archives.bulbagarden.net/media/upload/thumb/8/8b/0154Meganium.png/500px-0154Meganium.png',
+        home: 'https://archives.bulbagarden.net/media/upload/thumb/0/0d/HOME0154.png/400px-HOME0154.png',
+      },
+      region: 'johto',
+    },
+    {
+      _id: 13,
+      num: 155,
+      name: 'Cyndaquil',
+      types: ['fire'],
+      entry:
+        'It has a timid nature. If it is startled, the flames on its back burn more vigorously.',
+      sprites: {
+        pixel:
+          'https://archives.bulbagarden.net/media/upload/5/56/Spr_2g_155.png',
+        artwork:
+          'https://archives.bulbagarden.net/media/upload/thumb/9/97/0155Cyndaquil.png/500px-0155Cyndaquil.png',
+        home: 'https://archives.bulbagarden.net/media/upload/thumb/5/5f/HOME0156.png/400px-HOME0156.png',
+      },
+      region: 'johto',
+    },
+    {
+      _id: 14,
+      num: 156,
+      name: 'Quilava',
+      types: ['fire'],
+      entry:
+        'It intimidates foes with the heat of its flames. The fire burns more strongly when it readies to fight.',
+      sprites: {
+        pixel:
+          'https://archives.bulbagarden.net/media/upload/2/2f/Spr_2g_156.png',
+        artwork:
+          'https://archives.bulbagarden.net/media/upload/thumb/3/3f/0156Quilava.png/500px-0156Quilava.png',
+        home: 'https://archives.bulbagarden.net/media/upload/thumb/5/5f/HOME0156.png/400px-HOME0156.png',
+      },
+      region: 'johto',
+    },
+    {
+      _id: 15,
+      num: 157,
+      name: 'Typhlosion',
+      types: ['fire'],
+      entry:
+        'It attacks using blasts of fire. It creates heat shimmers with intense fire to hide itself.',
+      sprites: {
+        pixel:
+          'https://archives.bulbagarden.net/media/upload/b/b9/Spr_2g_157.png',
+        artwork:
+          'https://archives.bulbagarden.net/media/upload/thumb/1/13/0157Typhlosion.png/500px-0157Typhlosion.png',
+        home: 'https://archives.bulbagarden.net/media/upload/thumb/c/cf/HOME0157.png/400px-HOME0157.png',
+      },
+      region: 'johto',
+    },
+    {
+      _id: 16,
+      num: 158,
+      name: 'Totodile',
+      types: ['water'],
+      entry:
+        'It is small but rough and tough. It won’t hesitate to take a bite out of anything that moves.',
+      sprites: {
+        pixel:
+          'https://archives.bulbagarden.net/media/upload/7/72/Spr_2g_158.png',
+        artwork:
+          'https://archives.bulbagarden.net/media/upload/f/f7/0158Totodile.png',
+        home: 'https://archives.bulbagarden.net/media/upload/thumb/0/0c/HOME0158.png/400px-HOME0158.png',
+      },
+      region: 'johto',
+    },
+    {
+      _id: 17,
+      num: 159,
+      name: 'Croconaw',
+      types: ['water'],
+      entry:
+        'It opens its huge jaws wide when attacking. If it loses any fangs while biting, they grow back in quickly.',
+      sprites: {
+        pixel:
+          'https://archives.bulbagarden.net/media/upload/d/d4/Spr_2g_159.png',
+        artwork:
+          'https://archives.bulbagarden.net/media/upload/thumb/0/03/0159Croconaw.png/500px-0159Croconaw.png',
+        home: 'https://archives.bulbagarden.net/media/upload/thumb/1/18/HOME0159.png/400px-HOME0159.png',
+      },
+      region: 'johto',
+    },
+    {
+      _id: 18,
+      num: 160,
+      name: 'Feraligatr',
+      types: ['water'],
+      entry:
+        'It usually moves slowly, but it goes at blinding speed when it attacks and bites prey.',
+      sprites: {
+        pixel:
+          'https://archives.bulbagarden.net/media/upload/4/4d/Spr_2g_160.png',
+        artwork:
+          'https://archives.bulbagarden.net/media/upload/thumb/2/29/0160Feraligatr.png/500px-0160Feraligatr.png',
+        home: 'https://archives.bulbagarden.net/media/upload/thumb/b/b9/HOME0160.png/400px-HOME0160.png',
+      },
+      region: 'johto',
     },
   ]
+
   return pokemons
 }
 
 function getDefaultFilter() {
   return {
     txt: '',
-
+    region: 'all',
     types: [],
   }
 }

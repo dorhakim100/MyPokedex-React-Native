@@ -61,6 +61,24 @@ function ListScreen({ navigation }) {
     icon: <Entypo name='add-to-list' size={24} color={colors.strongWhite} />,
   }
 
+  const categories = [
+    { label: 'All', value: 1, onPress: (region) => handleRegionChange(region) },
+    {
+      label: 'Kanto',
+      value: 2,
+      onPress: (region) => handleRegionChange(region),
+    },
+    {
+      label: 'Johto',
+      value: 3,
+      onPress: (region) => handleRegionChange(region),
+    },
+  ]
+
+  function handleRegionChange(region) {
+    setFilter({ ...filter, region })
+  }
+
   useEffect(() => {
     loadPokemons(filter)
   }, [filter])
@@ -107,7 +125,11 @@ function ListScreen({ navigation }) {
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
         keyboardVerticalOffset={Platform.OS === 'ios' ? headerHeight : 0}
       >
-        <CustomPicker placeholder={'Category'} icon={'apps'} />
+        <CustomPicker
+          placeholder={'Category'}
+          icon={'apps'}
+          items={categories}
+        />
         <SearchInput onSubmit={handleSearchSubmit} />
         <PokemonList
           pokemons={pokemons}
