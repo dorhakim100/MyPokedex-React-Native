@@ -3,10 +3,12 @@ import { pokemonService } from '../../services/pokemon/pokemon.service'
 export const SET_POKEMONS = 'SET_POKEMONS'
 export const SET_POKEMON = 'SET_POKEMON'
 export const REMOVE_POKEMON = 'REMOVE_POKEMON'
+export const ADD_POKEMON = 'ADD_POKEMON'
 
 const initialState = {
   pokemons: pokemonService.getPokemons(),
   currPokemon: pokemonService.getEmptyPokemon(),
+  myPokemons: [],
 }
 
 export function pokemonReducer(state = initialState, action) {
@@ -20,15 +22,30 @@ export function pokemonReducer(state = initialState, action) {
       newState = { ...state, currPokemon: action.currPokemon }
       break
     case REMOVE_POKEMON:
-      const lastRemovedItem = state.pokemons.find(
+      const lastRemovedItem = state.myPokemons.find(
         (pokemonToFind) => pokemonToFind._id === action.pokemonId
       )
-      pokemons = state.pokemons.filter(
+      pokemons = state.myPokemons.filter(
         (pokemonToFind) => pokemonToFind._id !== action.pokemonId
       )
-      newState = { ...state, pokemons, lastRemovedItem }
+      newState = { ...state, myPokemons: pokemons, lastRemovedItem }
+      break
+    case ADD_POKEMON:
+      pokemons = state.myPokemons
+      const { pokemonToAdd } = action
+      if (
+        pokemons.find(
+          (pokemonToCheck) => pokemonToCheck._id === pokemonToAdd._id
+        )
+      )
+        return newState
+
+      newState = { ...state, myPokemons: [pokemonToAdd, ...pokemons] }
+
+      break
 
     default:
+      return newState
   }
   return newState
 }

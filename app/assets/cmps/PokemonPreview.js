@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, forwardRef, useRef } from 'react'
 import {
   View,
   Text,
@@ -15,15 +15,28 @@ import Swipeable from 'react-native-gesture-handler/Swipeable'
 import { capitalizeFirstLetter, getFormattedNum } from '../services/utils'
 
 import Types from './Types'
-import colors from '../config/color'
+
+import defaultStyles from '../config/styles'
+import { pokemonService } from '../services/pokemon/pokemon.service'
 
 const screenWidth = Dimensions.get('window').width
 
-function PokemonPreview({ pokemon, setPokemon, renderRightAction }) {
+function PokemonPreview({
+  pokemon,
+  setPokemon,
+  renderRightAction,
+  onSwipeableOpen,
+}) {
+  const pokemonRef = useRef(null)
+
   return (
-    <Swipeable renderRightActions={renderRightAction}>
+    <Swipeable
+      renderRightActions={renderRightAction}
+      onSwipeableOpen={() => onSwipeableOpen(pokemonRef)}
+      ref={pokemonRef}
+    >
       <TouchableHighlight
-        underlayColor={colors.blueHighlight}
+        underlayColor={defaultStyles.colors.blueHighlight}
         onPress={() => setPokemon(pokemon._id)}
         style={styles.preview}
       >
@@ -55,18 +68,21 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     padding: 5,
     shadowColor: 'gray',
-    shadowOffset: { width: 10, heigh: 10 },
+    shadowOffset: { width: 1, heigh: 10 },
     shadowOpacity: 0.5,
+    backgroundColor: defaultStyles.colors.whiteBackground,
   },
 
   num: {
+    ...defaultStyles.text,
+    fontSize: 15,
     width: 50,
   },
 
   name: {
+    ...defaultStyles.text,
     fontWeight: 'bold',
     fontWeight: '600',
-    fontFamily: Platform.OS === 'ios' ? 'Avenir' : 'Roboto',
   },
 
   sprite: {

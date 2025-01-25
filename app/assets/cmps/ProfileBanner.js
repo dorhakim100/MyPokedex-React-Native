@@ -9,7 +9,7 @@ import CustomText from './CustomText'
 function ProfileBanner({ profile }) {
   return (
     <View style={styles.container}>
-      <MaterialIcons name='account-circle' size={60} color={colors.mainRed} />
+      <MaterialIcons name='account-circle' size={60} color={'tomato'} />
       <View style={styles.nameContainer}>
         <CustomText style={styles.name}>{profile.name}</CustomText>
         <CustomText style={styles.mail}>{profile.mail}</CustomText>
@@ -25,6 +25,7 @@ const styles = StyleSheet.create({
     gap: 15,
     padding: 20,
     marginTop: 25,
+    marginBottom: 40,
     backgroundColor: colors.strongWhite,
   },
 

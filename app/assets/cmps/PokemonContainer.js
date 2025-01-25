@@ -8,6 +8,7 @@ import {
   Dimensions,
   TouchableWithoutFeedback,
   Platform,
+  Switch,
 } from 'react-native'
 
 import Types from './Types'
@@ -19,11 +20,18 @@ import colors from '../config/color'
 const screenWidth = Dimensions.get('window').width
 
 const PokemonContainer = ({ currPokemon, onPress }) => {
+  const [isShiny, setIsShiny] = useState(false)
+  console.log(currPokemon)
   return (
     <TouchableWithoutFeedback onPress={onPress}>
       <View style={styles.container}>
+        <Switch value={isShiny} onValueChange={(value) => setIsShiny(value)} />
         <Image
-          source={{ uri: currPokemon.sprites.picture }}
+          source={{
+            uri: isShiny
+              ? currPokemon.sprites.picture.shiny
+              : currPokemon.sprites.picture.regular,
+          }}
           style={styles.spriteImg}
         ></Image>
         <View style={styles.nameContainer}>

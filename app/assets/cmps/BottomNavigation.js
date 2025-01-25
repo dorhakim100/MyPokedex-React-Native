@@ -14,6 +14,7 @@ import DetailsScreen from '../Screens/DetailsScreen'
 import AccountScreen from '../Screens/AccountScreen'
 
 import colors from '../config/color'
+import MyList from '../Screens/MyList'
 
 const Tab = createBottomTabNavigator()
 
@@ -82,22 +83,6 @@ export default function CustomBottomNavigation() {
         }}
       />
       <Tab.Screen
-        name='List'
-        component={ListScreen}
-        options={{
-          tabBarLabel: 'List',
-          tabBarIcon: ({ color, size, focused }) => {
-            return (
-              <Feather
-                name='list'
-                size={size}
-                color={focused ? colors.mainRed : color}
-              />
-            )
-          },
-        }}
-      />
-      <Tab.Screen
         name='Details'
         component={DetailsScreen}
         options={{
@@ -114,10 +99,44 @@ export default function CustomBottomNavigation() {
         }}
       />
       <Tab.Screen
+        name='Explore'
+        component={ListScreen}
+        options={{
+          tabBarLabel: 'Explore',
+
+          tabBarIcon: ({ color, size, focused }) => {
+            return (
+              <MaterialIcons
+                name='explore'
+                size={size}
+                color={focused ? colors.mainRed : color}
+              />
+            )
+          },
+        }}
+      />
+      <Tab.Screen
+        name='List'
+        component={MyList}
+        options={{
+          tabBarLabel: 'List',
+          tabBarIcon: ({ color, size, focused }) => {
+            return (
+              <Feather
+                name='list'
+                size={size}
+                color={focused ? colors.mainRed : color}
+              />
+            )
+          },
+        }}
+      />
+      <Tab.Screen
         name='Account'
         component={AccountScreen}
         options={{
           tabBarLabel: 'Account',
+
           tabBarIcon: ({ focused, color, size }) => {
             return (
               <MaterialIcons
@@ -146,5 +165,8 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  exploreContainer: {
+    backgroundColor: 'tomato',
   },
 })

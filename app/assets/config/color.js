@@ -27,7 +27,10 @@ const colors = {
   strongWhite: '#FFFFFF',
   blueHighlight: 'rgba(153, 231, 236, 0.19)',
   danger: '#ff5252',
+  addGreen: '#81C784',
   subText: '#4F4F4F',
+  gold: '#FFD700',
+  darkGray: '#141414',
 }
 
 export default colors

@@ -4,6 +4,7 @@ import {
   SET_POKEMON,
   SET_POKEMONS,
   REMOVE_POKEMON,
+  ADD_POKEMON,
 } from '../reducers/pokemon.reducer'
 
 export async function loadPokemons(filterBy) {
@@ -33,6 +34,30 @@ export async function loadPokemon(pokemonId) {
     return pokemon
   } catch (err) {
     // console.log('Cannot load pokemon', err)
+    throw err
+  }
+}
+
+export function loadMyPokemons() {
+  try {
+  } catch (err) {
+    throw err
+  }
+}
+
+export async function addPokemon(pokemonId) {
+  try {
+    const pokemons = await pokemonService.query(
+      pokemonService.getDefaultFilter()
+    )
+
+    const pokemonToAdd = pokemons.find((pokemon) => pokemon._id === pokemonId)
+
+    store.dispatch({
+      type: ADD_POKEMON,
+      pokemonToAdd,
+    })
+  } catch (err) {
     throw err
   }
 }

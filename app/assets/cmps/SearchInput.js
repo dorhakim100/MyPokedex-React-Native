@@ -13,8 +13,9 @@ import FontAwesome from '@expo/vector-icons/FontAwesome'
 import CustomButton from './CustomButton'
 
 import colors from '../config/color'
+import defaultStyles from '../config/styles'
 
-const SearchInput = ({ onSubmit }) => {
+const SearchInput = ({ icon, onSubmit, ...otherProps }) => {
   const [query, setQuery] = useState('')
 
   const handleSearch = () => {
@@ -22,23 +23,42 @@ const SearchInput = ({ onSubmit }) => {
     onSubmit(query)
   }
 
+  const handleChange = (value) => {
+    setQuery(value)
+
+    // if (value.length === 0) onSubmit(value)
+    onSubmit(value)
+  }
+
   return (
     <View style={styles.container}>
-      <MaterialIcons name='catching-pokemon' size={30} color={colors.mainRed} />
+      {(icon && (
+        <MaterialCommunityIcons
+          name={icon}
+          size={20}
+          color={defaultStyles.colors.darkGray}
+          style={styles.icon}
+        />
+      )) || (
+        <MaterialIcons
+          name='catching-pokemon'
+          size={30}
+          color={colors.mainRed}
+        />
+      )}
+
       <TextInput
-        style={styles.input}
+        // keyboardType='numeric' // for number keypad
+        clearButtonMode='always' // only for ios
+        // secureTextEntry={true} or just secureTextEntry // passwords input
+        style={{ ...defaultStyles.text, flex: 1 }}
         value={query}
-        onChangeText={setQuery}
+        onChangeText={handleChange}
         placeholder={`Search here...`}
         returnKeyType='search'
         onSubmitEditing={handleSearch}
+        {...otherProps} // passing props all props from parent at once
       />
-      {/* <TouchableOpacity style={styles.buttonContainer} onPress={handleSearch}>
-        <Text style={styles.buttonText}>Search</Text>
-      </TouchableOpacity> */}
-      <CustomButton handlePress={handleSearch} secondaryColor={true}>
-        <FontAwesome name='search' size={24} color={colors.white} />{' '}
-      </CustomButton>
     </View>
   )
 }
@@ -49,16 +69,20 @@ const styles = StyleSheet.create({
     padding: 10,
     alignItems: 'center',
     gap: 5,
-  },
-  input: {
-    flex: 1,
-    borderColor: 'gray',
+    marginTop: 10,
+    marginBottom: 10,
+    borderColor: 'transparent',
+    backgroundColor: colors.secondaryBlueLight,
+    backgroundColor: colors.strongWhite,
     borderWidth: 1,
     marginRight: 10,
     paddingHorizontal: 10,
-    height: 40,
+    // height: 50,
+    borderRadius: 50,
+  },
+  input: {
+    flex: 1,
     fontSize: 16,
-    borderRadius: 8,
   },
 })
 

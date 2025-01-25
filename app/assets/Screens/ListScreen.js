@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import { useSelector } from 'react-redux'
 import {
   View,
@@ -17,6 +17,7 @@ import {
 } from 'react-native'
 
 import { LinearGradient } from 'react-native-svg'
+import Entypo from '@expo/vector-icons/Entypo'
 
 import { useHeaderHeight } from '@react-navigation/elements'
 
@@ -26,10 +27,13 @@ import PokemonPreview from '../cmps/PokemonPreview'
 import CustomButton from '../cmps/CustomButton'
 import ListItemSeparator from '../cmps/ListItemSeparator'
 import ListItemSwipeAction from '../cmps/ListItemSwipeAction'
+import PokemonList from '../cmps/PokemonList'
+import CustomPicker from '../cmps/CustomPicker'
 
 import { makeId } from '../services/utils'
 import { pokemonService } from '../services/pokemon/pokemon.service'
 import {
+  addPokemon,
   loadPokemon,
   loadPokemons,
   removePokemon,
@@ -49,6 +53,14 @@ function ListScreen({ navigation }) {
   const [filter, setFilter] = useState(pokemonService.getDefaultFilter())
 
   const [isRefreshing, setIsRefreshing] = useState(false)
+
+  const swipeableRef = useRef(null)
+
+  const swipeable = {
+    backgroundColor: colors.addGreen,
+    icon: <Entypo name='add-to-list' size={24} color={colors.strongWhite} />,
+  }
+
   useEffect(() => {
     loadPokemons(filter)
   }, [filter])
@@ -81,9 +93,11 @@ function ListScreen({ navigation }) {
     navigation.navigate('Details')
   }
 
-  const handleDelete = (pokemon) => {
+  const handleAdd = async (pokemon, swipeableRef) => {
+    swipeableRef?.current.close()
+    swipeableRef.current = null
     const pokemonId = pokemon._id
-    removePokemon(pokemonId)
+    await addPokemon(pokemonId)
   }
 
   return (
@@ -93,7 +107,15 @@ function ListScreen({ navigation }) {
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
         keyboardVerticalOffset={Platform.OS === 'ios' ? headerHeight : 0}
       >
+        <CustomPicker placeholder={'Category'} icon={'apps'} />
         <SearchInput onSubmit={handleSearchSubmit} />
+        <PokemonList
+          pokemons={pokemons}
+          setPokemon={setPokemon}
+          isRefreshing={isRefreshing}
+          onSwipePress={handleAdd}
+          swipeable={swipeable}
+        />
         {/* <ScrollView style={styles.scrollView}>
           {pokemons.map((pokemon) => {
             return (
@@ -108,7 +130,7 @@ function ListScreen({ navigation }) {
           })}
         </ScrollView> */}
         {/* or using FlatList */}
-        <FlatList
+        {/* <FlatList
           data={pokemons}
           keyExtractor={(item) => item._id.toString()} // Ensure unique IDs
           refreshing={isRefreshing}
@@ -119,7 +141,17 @@ function ListScreen({ navigation }) {
             <PokemonPreview
               pokemon={item}
               renderRightAction={() => (
-                <ListItemSwipeAction onPress={() => handleDelete(item)} />
+                <ListItemSwipeAction
+                  onPress={() => handleDelete(item)}
+                  backgroundColor={colors.addGreen}
+                  icon={
+                    <Entypo
+                      name='add-to-list'
+                      size={24}
+                      color={colors.strongWhite}
+                    />
+                  }
+                />
               )} // sending a function, not cmp
               setPokemon={setPokemon}
             />
@@ -128,7 +160,7 @@ function ListScreen({ navigation }) {
           ItemSeparatorComponent={
             <ListItemSeparator color={colors.secondaryBlueLight} />
           }
-        />
+        /> */}
       </KeyboardAvoidingView>
     </SafeAreaView>
   )

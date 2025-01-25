@@ -16,7 +16,7 @@ import { StyleSheet } from 'react-native'
 import CustomButton from '../cmps/CustomButton'
 
 function HomeScreen({ navigation }) {
-  const navigateToList = () => navigation.navigate('List')
+  const navigateToList = () => navigation.navigate('Explore')
   return (
     <View style={styles.container}>
       <ImageBackground
