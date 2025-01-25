@@ -7,7 +7,8 @@ import {
   View,
   FlatList,
 } from 'react-native'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
+import { useSelector } from 'react-redux'
 
 import { MaterialCommunityIcons } from '@expo/vector-icons'
 
@@ -19,6 +20,21 @@ import defaultStyles from '../config/styles'
 
 export default function CustomPicker({ icon, placeholder, items }) {
   const [isModal, setIsModal] = useState(false)
+
+  const filter = useSelector(
+    (stateSelector) => stateSelector.pokemonModule.filter
+  )
+
+  console.log(filter)
+
+  const [regionText, setRegionText] = useState(filter.region)
+
+  useEffect(() => {
+    setRegionText(
+      filter.region.toUpperCase().slice(0, 1) +
+        filter.region.slice(1, filter.region.length)
+    )
+  }, [filter.region])
 
   return (
     <>
@@ -33,7 +49,7 @@ export default function CustomPicker({ icon, placeholder, items }) {
                 style={styles.icon}
               />
             )}
-            <CustomText style={styles.text}>{placeholder}</CustomText>
+            <CustomText style={styles.text}>{regionText}</CustomText>
           </View>
           <MaterialCommunityIcons
             name={'chevron-down'}
@@ -67,10 +83,14 @@ export default function CustomPicker({ icon, placeholder, items }) {
 const styles = StyleSheet.create({
   container: {
     padding: 15,
-    marginVertical: 10,
+    marginTop: 10,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
+    marginHorizontal: 10,
+
+    backgroundColor: defaultStyles.colors.strongWhite,
+    borderRadius: 50,
   },
 
   textContainer: {

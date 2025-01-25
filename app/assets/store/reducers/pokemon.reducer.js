@@ -4,11 +4,13 @@ export const SET_POKEMONS = 'SET_POKEMONS'
 export const SET_POKEMON = 'SET_POKEMON'
 export const REMOVE_POKEMON = 'REMOVE_POKEMON'
 export const ADD_POKEMON = 'ADD_POKEMON'
+export const SET_FILTER = 'SET_FILTER'
 
 const initialState = {
   pokemons: pokemonService.getPokemons(),
   currPokemon: pokemonService.getEmptyPokemon(),
   myPokemons: [],
+  filter: pokemonService.getDefaultFilter(),
 }
 
 export function pokemonReducer(state = initialState, action) {
@@ -41,6 +43,11 @@ export function pokemonReducer(state = initialState, action) {
         return newState
 
       newState = { ...state, myPokemons: [pokemonToAdd, ...pokemons] }
+
+      break
+
+    case SET_FILTER:
+      newState = { ...state, filter: action.filterToSet }
 
       break
 

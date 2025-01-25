@@ -5,12 +5,17 @@ import {
   SET_POKEMONS,
   REMOVE_POKEMON,
   ADD_POKEMON,
+  SET_FILTER,
 } from '../reducers/pokemon.reducer'
 
 export async function loadPokemons(filterBy) {
   try {
     const pokemons = await pokemonService.query(filterBy)
 
+    store.dispatch({
+      type: SET_FILTER,
+      filterToSet: filterBy,
+    })
     store.dispatch({
       type: SET_POKEMONS,
       pokemons,

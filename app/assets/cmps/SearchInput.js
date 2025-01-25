@@ -75,7 +75,8 @@ const styles = StyleSheet.create({
     backgroundColor: colors.secondaryBlueLight,
     backgroundColor: colors.strongWhite,
     borderWidth: 1,
-    marginRight: 10,
+    marginHorizontal: 10,
+
     paddingHorizontal: 10,
     // height: 50,
     borderRadius: 50,

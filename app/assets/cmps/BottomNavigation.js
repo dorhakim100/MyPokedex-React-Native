@@ -1,24 +1,29 @@
 import React from 'react'
 import { View, StyleSheet } from 'react-native'
 
-import { CommonActions } from '@react-navigation/native'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
+import { createStackNavigator } from '@react-navigation/stack'
+import { CommonActions } from '@react-navigation/native'
+
 import { Text, BottomNavigation } from 'react-native-paper'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 import MaterialIcons from '@expo/vector-icons/MaterialIcons'
 import Feather from '@expo/vector-icons/Feather'
 
 import ListScreen from '../Screens/ListScreen'
-import HomeScreen from '../Screens/HomeScreen'
+import WelcomeScreen from '../Screens/WelcomeScreen'
 import DetailsScreen from '../Screens/DetailsScreen'
 import AccountScreen from '../Screens/AccountScreen'
+import LoginScreen from '../Screens/LoginScreen'
+import SignupScreen from '../Screens/SignupScreen'
 
 import colors from '../config/color'
 import MyList from '../Screens/MyList'
 
 const Tab = createBottomTabNavigator()
+const Stack = createStackNavigator()
 
-export default function CustomBottomNavigation() {
+function CustomBottomNavigation() {
   return (
     <Tab.Navigator
       screenOptions={{
@@ -66,9 +71,9 @@ export default function CustomBottomNavigation() {
         />
       )}
     >
-      <Tab.Screen
+      {/* <Tab.Screen
         name='Home'
-        component={HomeScreen}
+        component={WelcomeScreen}
         options={{
           tabBarLabel: 'Home',
           tabBarIcon: ({ color, size, focused }) => {
@@ -81,7 +86,7 @@ export default function CustomBottomNavigation() {
             )
           },
         }}
-      />
+      /> */}
       <Tab.Screen
         name='Details'
         component={DetailsScreen}
@@ -170,3 +175,18 @@ const styles = StyleSheet.create({
     backgroundColor: 'tomato',
   },
 })
+
+export default function AppNavigator() {
+  return (
+    <Stack.Navigator
+      initialRouteName='Welcome' // Set the welcome screen as the initial screen
+      screenOptions={{ headerShown: false }}
+    >
+      <Stack.Screen name='Welcome' component={WelcomeScreen} />
+      <Stack.Screen name='Login' component={LoginScreen} />
+      <Stack.Screen name='Signup' component={SignupScreen} />
+
+      <Stack.Screen name='Main' component={CustomBottomNavigation} />
+    </Stack.Navigator>
+  )
+}

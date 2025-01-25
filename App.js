@@ -6,7 +6,7 @@ import { store } from './app/assets/store/store.js'
 import { AppRegistry } from 'react-native'
 import { PaperProvider } from 'react-native-paper'
 
-import HomeScreen from './app/assets/Screens/HomeScreen.js'
+import WelcomeScreen from './app/assets/Screens/WelcomeScreen.js'
 import ListScreen from './app/assets/Screens/ListScreen.js'
 import DetailsScreen from './app/assets/Screens/DetailsScreen.js'
 
@@ -33,11 +33,12 @@ export default function App() {
           <NavigationContainer>
             <SafeAreaView>
               {/* <Stack.Navigator initialRouteName='Home'>
-            <Stack.Screen name='Home' component={HomeScreen} />
+            <Stack.Screen name='Home' component={WelcomeScreen} />
             <Stack.Screen name='List' component={ListScreen} />
             <Stack.Screen name='Details' component={DetailsScreen} />
           </Stack.Navigator> */}
             </SafeAreaView>
+
             <CustomBottomNavigation />
           </NavigationContainer>
         </PaperProvider>

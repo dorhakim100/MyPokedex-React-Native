@@ -15,8 +15,12 @@ import { StyleSheet } from 'react-native'
 
 import CustomButton from '../cmps/CustomButton'
 
-function HomeScreen({ navigation }) {
-  const navigateToList = () => navigation.navigate('Explore')
+function WelcomeScreen({ navigation }) {
+  const navigateToList = () => navigation.replace('Main') // replace for disabling navigation back, navigation.navigate for going back
+  const navigateToLogin = () => navigation.replace('Login')
+  const navigateToSignup = () => navigation.replace('Signup')
+  const navigateToAccount = () =>
+    navigation.replace('Main', { screen: 'Account' }) // for navigating to a screen within bottom navigation
   return (
     <View style={styles.container}>
       <ImageBackground
@@ -39,9 +43,15 @@ function HomeScreen({ navigation }) {
           </View>
         </TouchableOpacity>
         <View style={styles.buttonsContainer}>
-          <CustomButton handlePress={navigateToList}>Go</CustomButton>
-          <CustomButton handlePress={navigateToList} secondaryColor={true}>
-            Go
+          <CustomButton handlePress={navigateToLogin} style={styles.button}>
+            Login
+          </CustomButton>
+          <CustomButton
+            handlePress={navigateToSignup}
+            style={styles.button}
+            secondaryColor={true}
+          >
+            Signup
           </CustomButton>
         </View>
 
@@ -72,14 +82,14 @@ const styles = StyleSheet.create({
   },
   logo: {
     position: 'absolute',
-    top: 150,
+    top: 170,
     height: 200,
     width: 200,
     alignSelf: 'center',
   },
   logoText: {
     position: 'absolute',
-    top: 360,
+    top: 380,
     alignSelf: 'center',
     fontFamily: 'pokefont',
     fontWeight: 700,
@@ -87,12 +97,19 @@ const styles = StyleSheet.create({
   },
 
   buttonsContainer: {
-    flexDirection: 'row',
+    // flexDirection: 'row',
     position: 'absolute',
-    top: 420,
+    top: 440,
+    width: 100,
+    // alignItems: 'center',
     alignSelf: 'center',
     gap: 5,
   },
+
+  button: {
+    flex: 1,
+    textAlign: 'center',
+  },
 })
 
-export default HomeScreen
+export default WelcomeScreen

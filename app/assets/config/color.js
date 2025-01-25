@@ -31,6 +31,7 @@ const colors = {
   subText: '#4F4F4F',
   gold: '#FFD700',
   darkGray: '#141414',
+  lightGray: '#F0F0F0',
 }
 
 export default colors

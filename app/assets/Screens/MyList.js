@@ -14,6 +14,7 @@ import PokemonList from '../cmps/PokemonList'
 import EvilIcons from '@expo/vector-icons/EvilIcons'
 
 import colors from '../config/color'
+import { pokemonService } from '../services/pokemon/pokemon.service'
 
 function MyList({ navigation }) {
   const myPokemons = useSelector(
@@ -28,7 +29,7 @@ function MyList({ navigation }) {
   }
 
   const setPokemon = async (pokemonId) => {
-    await loadPokemons(myPokemons)
+    await loadPokemons(pokemonService.getDefaultFilter())
     loadPokemon(pokemonId)
     navigation.navigate('Details')
   }

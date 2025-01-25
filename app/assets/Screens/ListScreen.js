@@ -89,22 +89,22 @@ function ListScreen({ navigation }) {
   }
   const [keyboardOffset, setKeyboardOffset] = useState(0)
 
-  useEffect(() => {
-    const showSubscription = Keyboard.addListener(
-      'keyboardDidShow',
-      (event) => {
-        setKeyboardOffset(400) // Or any additional calculation based on your UI
-      }
-    )
-    const hideSubscription = Keyboard.addListener('keyboardDidHide', () => {
-      setKeyboardOffset(0) // Reset offset when keyboard is dismissed
-    })
+  // useEffect(() => {
+  //   const showSubscription = Keyboard.addListener(
+  //     'keyboardDidShow',
+  //     (event) => {
+  //       setKeyboardOffset(400) // Or any additional calculation based on your UI
+  //     }
+  //   )
+  //   const hideSubscription = Keyboard.addListener('keyboardDidHide', () => {
+  //     setKeyboardOffset(0) // Reset offset when keyboard is dismissed
+  //   })
 
-    return () => {
-      showSubscription.remove()
-      hideSubscription.remove()
-    }
-  }, [])
+  //   return () => {
+  //     showSubscription.remove()
+  //     hideSubscription.remove()
+  //   }
+  // }, [])
 
   const setPokemon = (pokemonId) => {
     loadPokemon(pokemonId)
@@ -214,14 +214,14 @@ const styles = StyleSheet.create({
   },
 })
 
-const dismissKeyboard = () => {
-  Keyboard.dismiss()
-}
+// const dismissKeyboard = () => {
+//   Keyboard.dismiss()
+// }
 
-const DismissKeyboardView = ({ children }) => (
-  <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
-    {children}
-  </TouchableWithoutFeedback>
-)
+// const DismissKeyboardView = ({ children }) => (
+//   <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
+//     {children}
+//   </TouchableWithoutFeedback>
+// )
 
 export default ListScreen
