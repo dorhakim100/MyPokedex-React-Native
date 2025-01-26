@@ -11,10 +11,31 @@ export default function CustomText({
     fontWeight: 500,
   },
 }) {
-  const { color, fontSize, fontWeight } = style
+  const {
+    color,
+    fontSize,
+    fontWeight,
+    padding,
+    margin,
+    paddingHorizontal,
+    marginHorizontal,
+    width,
+  } = style
 
   return (
-    <Text style={{ ...styles.text, color, fontSize, fontWeight }}>
+    <Text
+      style={{
+        ...styles.text,
+        color,
+        fontSize,
+        fontWeight,
+        padding,
+        margin,
+        paddingHorizontal,
+        marginHorizontal,
+        width,
+      }}
+    >
       {children}
     </Text>
   )

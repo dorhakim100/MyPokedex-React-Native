@@ -9,4 +9,10 @@ export default {
     fontSize: 18,
     fontFamily: Platform.OS === 'android' ? 'Roboto' : 'Avenir',
   },
+  error: {
+    color: colors.error,
+    fontWeight: 800,
+    width: 'fit-content',
+    marginHorizontal: 10,
+  },
 }

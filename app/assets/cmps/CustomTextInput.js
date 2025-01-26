@@ -1,5 +1,5 @@
 import { StyleSheet, Text, TextInput, View } from 'react-native'
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 
 import defaultStyles from '../config/styles'
 
@@ -9,9 +9,14 @@ export default function CustomTextInput({
   isPassword,
   autoCapitalize,
   icon,
+  name,
+  value,
+  style,
+  onChangeText,
+  onFocus,
   ...otherProps
 }) {
-  const [value, setValue] = useState('')
+  const [query, setQuery] = useState('')
 
   return (
     <View style={styles.container}>
@@ -23,10 +28,11 @@ export default function CustomTextInput({
         secureTextEntry={isPassword ? true : false}
         clearButtonMode='always'
         autoCorrect={false}
-        value={value}
-        onChangeText={setValue}
+        onChangeText={onChangeText}
         style={{ ...defaultStyles.text, flex: 1 }}
         placeholder={children}
+        value={value}
+        onFocus={onFocus}
       />
     </View>
   )

@@ -6,11 +6,15 @@ import {
   View,
   KeyboardAvoidingView,
 } from 'react-native'
-import React from 'react'
+import React, { useState } from 'react'
+
+import * as Yup from 'yup'
 
 import Screen from './Screen'
 import CustomTextInput from '../cmps/CustomTextInput'
 import CustomButton from '../cmps/CustomButton'
+import CustomText from '../cmps/CustomText'
+import CustomFormikForm from '../cmps/CustomFormikForm'
 
 import Entypo from '@expo/vector-icons/Entypo'
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons'
@@ -20,7 +24,15 @@ import MaterialIcons from '@expo/vector-icons/MaterialIcons'
 import defaultStyles from '../config/styles'
 import { makeId } from '../services/utils'
 
+const validationSchema = Yup.object().shape({
+  username: Yup.string().required().min(2).label('Username'),
+
+  password: Yup.string().required().min(6).label('Password'),
+})
+
 export default function LoginScreen({ navigation }) {
+  const [editForm, setEditForm] = useState()
+
   const inputs = [
     {
       placeholder: 'Username or Email',
@@ -32,6 +44,7 @@ export default function LoginScreen({ navigation }) {
         />
       ),
       autoCapitalize: 'none',
+      name: 'username',
     },
 
     {
@@ -45,6 +58,7 @@ export default function LoginScreen({ navigation }) {
       ),
       isPassword: true,
       autoCapitalize: 'none',
+      name: 'password',
     },
   ]
 
@@ -52,27 +66,21 @@ export default function LoginScreen({ navigation }) {
     navigation.replace('Main', { screen: 'Account' })
   const navigateToSignup = () => navigation.replace('Signup')
 
+  function onSubmit(values) {
+    console.log(values)
+    navigateToAccount()
+  }
+
   return (
     <Screen style={styles.container}>
       <Image source={require('../imgs/pokeball.png')} style={styles.logo} />
+      <CustomFormikForm
+        inputs={inputs}
+        button={'Login'}
+        validationSchema={validationSchema}
+        onSubmit={onSubmit}
+      />
 
-      {inputs.map((input) => {
-        return (
-          <CustomTextInput
-            icon={input.icon}
-            key={makeId()}
-            isPassword={input.isPassword}
-            autoCapitalize={input.autoCapitalize}
-          >
-            {input.placeholder}
-          </CustomTextInput>
-        )
-      })}
-      <View style={styles.buttonContainer}>
-        <CustomButton style={styles.button} handlePress={navigateToAccount}>
-          Login
-        </CustomButton>
-      </View>
       <View style={styles.buttonContainer}>
         <Button title='Register first' onPress={navigateToSignup} />
       </View>

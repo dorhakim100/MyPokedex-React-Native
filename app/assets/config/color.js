@@ -32,6 +32,7 @@ const colors = {
   gold: '#FFD700',
   darkGray: '#141414',
   lightGray: '#F0F0F0',
+  error: '#FF4D4F',
 }
 
 export default colors
