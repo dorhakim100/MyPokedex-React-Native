@@ -15,4 +15,15 @@ export default {
     width: 'fit-content',
     marginHorizontal: 10,
   },
+  input: {
+    flexDirection: 'row',
+    padding: 10,
+
+    gap: 5,
+    backgroundColor: colors.lightGray,
+    borderRadius: 50,
+    width: '100%',
+    padding: 15,
+    marginVertical: 10,
+  },
 }

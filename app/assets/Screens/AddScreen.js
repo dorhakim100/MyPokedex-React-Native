@@ -5,9 +5,11 @@ import * as Yup from 'yup'
 
 import Screen from './Screen'
 import CustomFormikForm from '../cmps/forms/CustomFormikForm'
+import CustomImagePicker from '../cmps/CustomImagePicker.js'
 
 import AntDesign from '@expo/vector-icons/AntDesign'
 import FontAwesome6 from '@expo/vector-icons/FontAwesome6'
+import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons'
 
 import defaultStyles from '../config/styles'
 import { addNewPokemon, addPokemon } from '../store/actions/pokemon.actions'
@@ -34,6 +36,18 @@ export default function AddScreen({ navigation }) {
 
       name: 'name',
       type: 'text',
+    },
+    {
+      icon: (
+        <MaterialCommunityIcons
+          name='face-man-profile'
+          size={24}
+          color={defaultStyles.colors.subText}
+        />
+      ),
+
+      name: 'image',
+      type: 'imagePicker',
     },
     {
       placeholder: 'Region',
@@ -106,18 +120,25 @@ export default function AddScreen({ navigation }) {
     region: '',
   })
 
-  useEffect(() => {
-    // console.log(values)
-  }, [values])
+  //   useEffect(() => {
+  //     // console.log(values)
+  //   }, [values])
 
   const handleRegionChange = (region) => {
     setValues({ ...values, region })
   }
 
   async function onSubmit(values) {
-    const { name, region } = values
+    console.log(values)
+    const { name, region, image } = values
+    const newSprites = {
+      artwork: image,
+      home: image,
+
+      pixel: image,
+    }
     const pokemon = pokemonService.getEmptyPokemon()
-    addNewPokemon({ ...pokemon, name, region })
+    addNewPokemon({ ...pokemon, name, region, sprites: newSprites })
     navigateToMain()
   }
 

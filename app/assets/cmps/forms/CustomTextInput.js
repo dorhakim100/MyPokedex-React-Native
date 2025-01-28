@@ -19,7 +19,7 @@ export default function CustomTextInput({
   const [query, setQuery] = useState('')
 
   return (
-    <View style={styles.container}>
+    <View style={defaultStyles.input}>
       {icon && <View style={styles.iconContainer}>{icon}</View>}
       <TextInput
         {...otherProps}
@@ -41,17 +41,17 @@ export default function CustomTextInput({
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flexDirection: 'row',
-    padding: 10,
+  // container: {
+  //   flexDirection: 'row',
+  //   padding: 10,
 
-    gap: 5,
-    backgroundColor: defaultStyles.colors.lightGray,
-    borderRadius: 50,
-    width: '100%',
-    padding: 15,
-    marginVertical: 10,
-  },
+  //   gap: 5,
+  //   backgroundColor: defaultStyles.colors.lightGray,
+  //   borderRadius: 50,
+  //   width: '100%',
+  //   padding: 15,
+  //   marginVertical: 10,
+  // },
 
   iconContainer: {
     marginInlineEnd: 10,

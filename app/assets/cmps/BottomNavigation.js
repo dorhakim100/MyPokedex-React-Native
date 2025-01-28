@@ -27,6 +27,7 @@ const Stack = createStackNavigator()
 function CustomBottomNavigation() {
   return (
     <Tab.Navigator
+      initialRouteName='Explore'
       screenOptions={{
         headerShown: false,
       }}

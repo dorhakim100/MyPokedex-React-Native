@@ -9,6 +9,7 @@ import CustomTextInput from './CustomTextInput'
 
 import defaultStyles from '../../config/styles'
 import CustomPicker from '../CustomPicker'
+import CustomImagePicker from '../CustomImagePicker'
 
 export default function CustomFormikForm({
   inputs,
@@ -44,17 +45,30 @@ export default function CustomFormikForm({
         }) => (
           <>
             {inputs.map((input) => {
-              if (input.type === 'picker') {
-                input.options.map((option) => {
-                  const originalFunction = option.onPress
-                  delete option.onPress
+              switch (input.type) {
+                case 'picker':
+                  input.options.map((option) => {
+                    const originalFunction = option.onPress
+                    delete option.onPress
 
-                  option.onPress = () => {
-                    originalFunction()
-                    setFieldValue(input.name, option.label)
+                    option.onPress = () => {
+                      originalFunction()
+                      setFieldValue(input.name, option.label)
+                    }
+                  })
+
+                  break
+                case 'imagePicker':
+                  input.onSetImage = (res) => {
+                    setFieldValue(input.name, res)
                   }
-                })
+
+                  break
+
+                default:
+                  break
               }
+
               return (
                 <View key={input.name} style={styles.inputContainer}>
                   {(input.type === 'text' && (
@@ -80,6 +94,9 @@ export default function CustomFormikForm({
                         value={values[input.name]}
                         placeholder={input.placeholder}
                       />
+                    )) ||
+                    (input.type === 'imagePicker' && (
+                      <CustomImagePicker input={input} />
                     ))}
 
                   {touched[input.name] && errors[input.name] && (

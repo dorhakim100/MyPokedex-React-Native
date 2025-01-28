@@ -1,5 +1,5 @@
 import { Button, Image, StyleSheet, Text, View } from 'react-native'
-import React from 'react'
+import React, { useState } from 'react'
 
 import Screen from './Screen'
 import CustomTextInput from '../cmps/forms/CustomTextInput'
@@ -35,6 +35,13 @@ const validationSchema = Yup.object().shape({
 })
 
 export default function SignupScreen({ navigation }) {
+  const [values, setValues] = useState({
+    fullname: '',
+    username: '',
+    password: '',
+    email: '',
+    phone: '',
+  })
   const inputs = [
     {
       key: makeId(),
@@ -120,6 +127,7 @@ export default function SignupScreen({ navigation }) {
         button={'Signup'}
         validationSchema={validationSchema}
         onSubmit={onSubmit}
+        values={values}
       />
       <View style={styles.buttonContainer}>
         <Button title='Already a member?' onPress={navigateToLogin} />

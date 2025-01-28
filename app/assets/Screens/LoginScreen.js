@@ -31,7 +31,10 @@ const validationSchema = Yup.object().shape({
 })
 
 export default function LoginScreen({ navigation }) {
-  const [editForm, setEditForm] = useState()
+  const [values, setValues] = useState({
+    username: '',
+    password: '',
+  })
 
   const inputs = [
     {
@@ -81,6 +84,7 @@ export default function LoginScreen({ navigation }) {
         button={'Login'}
         validationSchema={validationSchema}
         onSubmit={onSubmit}
+        values={values}
       />
 
       <View style={styles.buttonContainer}>
