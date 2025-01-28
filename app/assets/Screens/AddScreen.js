@@ -46,7 +46,7 @@ export default function AddScreen({ navigation }) {
         />
       ),
 
-      name: 'image',
+      name: 'images',
       type: 'imagePicker',
     },
     {
@@ -118,6 +118,7 @@ export default function AddScreen({ navigation }) {
   const [values, setValues] = useState({
     name: '',
     region: '',
+    images: [],
   })
 
   //   useEffect(() => {
@@ -130,12 +131,20 @@ export default function AddScreen({ navigation }) {
 
   async function onSubmit(values) {
     console.log(values)
-    const { name, region, image } = values
+    const { name, region, images } = values
+    if (images.length < 3) {
+      for (let i = 0; i < 3; i++) {
+        if (!images[i]) {
+          images[i] = images[0]
+        }
+      }
+    }
+    console.log(images)
     const newSprites = {
-      artwork: image,
-      home: image,
+      artwork: images[0],
+      home: images[1],
 
-      pixel: image,
+      pixel: images[2],
     }
     const pokemon = pokemonService.getEmptyPokemon()
     addNewPokemon({ ...pokemon, name, region, sprites: newSprites })

@@ -60,6 +60,7 @@ export default function CustomFormikForm({
                   break
                 case 'imagePicker':
                   input.onSetImage = (res) => {
+                    console.log(res)
                     setFieldValue(input.name, res)
                   }
 
