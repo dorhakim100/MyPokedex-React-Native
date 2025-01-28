@@ -19,6 +19,7 @@ import SignupScreen from '../Screens/SignupScreen'
 
 import colors from '../config/color'
 import MyList from '../Screens/MyList'
+import AddScreen from '../Screens/AddScreen'
 
 const Tab = createBottomTabNavigator()
 const Stack = createStackNavigator()
@@ -187,6 +188,7 @@ export default function AppNavigator() {
       <Stack.Screen name='Signup' component={SignupScreen} />
 
       <Stack.Screen name='Main' component={CustomBottomNavigation} />
+      <Stack.Screen name='Add' component={AddScreen} />
     </Stack.Navigator>
   )
 }

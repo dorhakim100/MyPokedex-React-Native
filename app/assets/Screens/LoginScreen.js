@@ -11,10 +11,10 @@ import React, { useState } from 'react'
 import * as Yup from 'yup'
 
 import Screen from './Screen'
-import CustomTextInput from '../cmps/CustomTextInput'
+import CustomTextInput from '../cmps/forms/CustomTextInput'
 import CustomButton from '../cmps/CustomButton'
 import CustomText from '../cmps/CustomText'
-import CustomFormikForm from '../cmps/CustomFormikForm'
+import CustomFormikForm from '../cmps/forms/CustomFormikForm'
 
 import Entypo from '@expo/vector-icons/Entypo'
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons'
@@ -45,6 +45,7 @@ export default function LoginScreen({ navigation }) {
       ),
       autoCapitalize: 'none',
       name: 'username',
+      type: 'text',
     },
 
     {
@@ -59,6 +60,7 @@ export default function LoginScreen({ navigation }) {
       isPassword: true,
       autoCapitalize: 'none',
       name: 'password',
+      type: 'text',
     },
   ]
 

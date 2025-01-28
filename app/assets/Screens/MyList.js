@@ -15,6 +15,7 @@ import EvilIcons from '@expo/vector-icons/EvilIcons'
 
 import colors from '../config/color'
 import { pokemonService } from '../services/pokemon/pokemon.service'
+import CustomText from '../cmps/CustomText'
 
 function MyList({ navigation }) {
   const myPokemons = useSelector(
@@ -42,17 +43,29 @@ function MyList({ navigation }) {
   }
   return (
     <Screen>
-      <PokemonList
-        pokemons={myPokemons}
-        isRefreshing={isRefreshing}
-        onSwipePress={handleDelete}
-        swipeable={swipeable}
-        setPokemon={setPokemon}
-      />
+      {(myPokemons.length === 0 && (
+        <CustomText style={styles.emptyList}>Add Pokemons first...</CustomText>
+      )) || (
+        <PokemonList
+          pokemons={myPokemons}
+          isRefreshing={isRefreshing}
+          onSwipePress={handleDelete}
+          swipeable={swipeable}
+          setPokemon={setPokemon}
+        />
+      )}
     </Screen>
   )
 }
 
-const styles = StyleSheet.create({})
+const styles = StyleSheet.create({
+  emptyList: {
+    flex: 1,
+    alignSelf: 'center',
+    textAlign: 'center',
+    padding: 20,
+    fontSize: 30,
+  },
+})
 
 export default MyList

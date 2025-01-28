@@ -11,6 +11,7 @@ import {
 } from 'react-native'
 
 import Swipeable from 'react-native-gesture-handler/Swipeable'
+import { MaterialCommunityIcons } from '@expo/vector-icons'
 
 import { capitalizeFirstLetter, getFormattedNum } from '../services/utils'
 
@@ -48,11 +49,18 @@ function PokemonPreview({
             style={styles.sprite}
           ></Image>
 
-          <Text style={styles.name}>{pokemon.name}</Text>
+          <Text style={styles.name} numberOfLines={1}>
+            {pokemon.name}
+          </Text>
 
           <View style={styles.types}>
             <Types types={pokemon.types} isSprite={true} />
           </View>
+          <MaterialCommunityIcons
+            name={'chevron-right'}
+            size={20}
+            color={defaultStyles.colors.darkGray}
+          />
         </View>
       </TouchableHighlight>
     </Swipeable>
@@ -85,6 +93,7 @@ const styles = StyleSheet.create({
     ...defaultStyles.text,
     fontWeight: 'bold',
     fontWeight: '600',
+    width: 120,
   },
 
   sprite: {

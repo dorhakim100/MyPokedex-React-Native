@@ -20,6 +20,10 @@ export default function CustomText({
     paddingHorizontal,
     marginHorizontal,
     width,
+    alignSelf,
+    textAlign,
+    justifySelf,
+    flex,
   } = style
 
   return (
@@ -34,6 +38,11 @@ export default function CustomText({
         paddingHorizontal,
         marginHorizontal,
         width,
+        alignSelf,
+        textAlign,
+        justifySelf,
+
+        flex,
       }}
     >
       {children}

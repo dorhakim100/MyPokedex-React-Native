@@ -59,6 +59,31 @@ export function getRandomIntInclusive(min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min //The maximum is inclusive and the minimum is inclusive
 }
 
+export function getRandomHexColor() {
+  const randomChannel = () =>
+    Math.floor(100 + Math.random() * 155)
+      .toString(16)
+      .padStart(2, '0')
+  return `#${randomChannel()}${randomChannel()}${randomChannel()}`
+}
+
+export function getRandomDarkHexColor() {
+  const randomChannel = () =>
+    Math.floor(Math.random() * 200)
+      .toString(16)
+      .padStart(2, '0') // Limit to avoid too light colors
+  const color = `#${randomChannel()}${randomChannel()}${randomChannel()}`
+
+  // Ensure it has good contrast with white
+  const isContrastSufficient = (hex) => {
+    const rgb = hex.match(/\w\w/g).map((c) => parseInt(c, 16))
+    const brightness = (rgb[0] * 299 + rgb[1] * 587 + rgb[2] * 114) / 1000 // Brightness formula
+    return brightness < 200 // Lower brightness means better contrast
+  }
+
+  return isContrastSufficient(color) ? color : getRandomHexColor()
+}
+
 export function randomPastTime() {
   const HOUR = 1000 * 60 * 60
   const DAY = 1000 * 60 * 60 * 24

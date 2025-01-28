@@ -17,29 +17,41 @@ import Screen from '../Screens/Screen'
 import PickerItem from './PickerItem'
 
 import defaultStyles from '../config/styles'
+import ListItemSeparator from './ListItemSeparator'
 
-export default function CustomPicker({ icon, placeholder, items }) {
+export default function CustomPicker({
+  icon,
+  placeholder,
+  items,
+  style = { backgroundColor: defaultStyles.colors.strongWhite },
+  value,
+}) {
   const [isModal, setIsModal] = useState(false)
 
-  const filter = useSelector(
-    (stateSelector) => stateSelector.pokemonModule.filter
-  )
+  // const filter = useSelector(
+  //   (stateSelector) => stateSelector.pokemonModule.filter
+  // )
 
-  console.log(filter)
+  const [text, setText] = useState(placeholder)
 
-  const [regionText, setRegionText] = useState(filter.region)
+  const { backgroundColor } = style
+
+  // useEffect(() => {
+  //   setRegionText(
+  //     filter.region.toUpperCase().slice(0, 1) +
+  //       filter.region.slice(1, filter.region.length)
+  //   )
+  // }, [filter.region])
 
   useEffect(() => {
-    setRegionText(
-      filter.region.toUpperCase().slice(0, 1) +
-        filter.region.slice(1, filter.region.length)
-    )
-  }, [filter.region])
+    console.log(value)
+    if (value) setText(value)
+  }, [value])
 
   return (
     <>
       <TouchableWithoutFeedback onPress={() => setIsModal(true)}>
-        <View style={styles.container}>
+        <View style={{ ...styles.container, backgroundColor }}>
           <View style={styles.textContainer}>
             {icon && (
               <MaterialCommunityIcons
@@ -49,7 +61,7 @@ export default function CustomPicker({ icon, placeholder, items }) {
                 style={styles.icon}
               />
             )}
-            <CustomText style={styles.text}>{regionText}</CustomText>
+            <CustomText style={styles.text}>{text}</CustomText>
           </View>
           <MaterialCommunityIcons
             name={'chevron-down'}
@@ -69,10 +81,16 @@ export default function CustomPicker({ icon, placeholder, items }) {
                 label={item.label}
                 onPress={() => {
                   item.onPress(item.label.toLowerCase())
+
                   setIsModal(false)
                 }}
               />
             )}
+            ItemSeparatorComponent={
+              <ListItemSeparator
+                color={defaultStyles.colors.secondaryBlueLight}
+              />
+            }
           />
         </Screen>
       </Modal>
@@ -84,6 +102,7 @@ const styles = StyleSheet.create({
   container: {
     padding: 15,
     marginTop: 10,
+    paddingRight: 25,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',

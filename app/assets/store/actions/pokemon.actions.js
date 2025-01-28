@@ -67,6 +67,13 @@ export async function addPokemon(pokemonId) {
   }
 }
 
+export function addNewPokemon(pokemonToAdd) {
+  store.dispatch({
+    type: ADD_POKEMON,
+    pokemonToAdd,
+  })
+}
+
 export function removePokemon(pokemonId) {
   try {
     store.dispatch({

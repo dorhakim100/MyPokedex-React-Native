@@ -1,7 +1,7 @@
 import { StyleSheet, Text, TextInput, View } from 'react-native'
 import React, { useState, useEffect } from 'react'
 
-import defaultStyles from '../config/styles'
+import defaultStyles from '../../config/styles'
 
 export default function CustomTextInput({
   children,
@@ -33,6 +33,8 @@ export default function CustomTextInput({
         placeholder={children}
         value={value}
         onFocus={onFocus}
+
+        // multiline // for expending input
       />
     </View>
   )

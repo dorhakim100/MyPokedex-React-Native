@@ -30,7 +30,7 @@ import ListItemSwipeAction from '../cmps/ListItemSwipeAction'
 import PokemonList from '../cmps/PokemonList'
 import CustomPicker from '../cmps/CustomPicker'
 
-import { makeId } from '../services/utils'
+import { capitalizeFirstLetter, makeId } from '../services/utils'
 import { pokemonService } from '../services/pokemon/pokemon.service'
 import {
   addPokemon,
@@ -56,6 +56,8 @@ function ListScreen({ navigation }) {
 
   const swipeableRef = useRef(null)
 
+  const navigateToAdd = () => navigation.navigate('Add')
+
   const swipeable = {
     backgroundColor: colors.addGreen,
     icon: <Entypo name='add-to-list' size={24} color={colors.strongWhite} />,
@@ -77,6 +79,11 @@ function ListScreen({ navigation }) {
 
   function handleRegionChange(region) {
     setFilter({ ...filter, region })
+  }
+
+  function onItemPickerPress(item) {
+    item.onPress(item.label.toLowerCase())
+    setIsModal(false)
   }
 
   useEffect(() => {
@@ -126,11 +133,22 @@ function ListScreen({ navigation }) {
         keyboardVerticalOffset={Platform.OS === 'ios' ? headerHeight : 0}
       >
         <CustomPicker
-          placeholder={'Category'}
+          placeholder={'Region'}
+          value={
+            filter.region !== 'all'
+              ? capitalizeFirstLetter(filter.region)
+              : 'Region'
+          }
           icon={'apps'}
           items={categories}
+          onPress={onItemPickerPress}
         />
         <SearchInput onSubmit={handleSearchSubmit} />
+        <View style={styles.buttonContainer}>
+          <CustomButton style={styles.addButton} handlePress={navigateToAdd}>
+            Add
+          </CustomButton>
+        </View>
         <PokemonList
           pokemons={pokemons}
           setPokemon={setPokemon}
@@ -191,7 +209,21 @@ function ListScreen({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignPokemons: 'center',
+    // alignItems: 'center',
+    // padding: 5,
+  },
+
+  buttonContainer: {
+    alignSelf: 'flex-end',
+    marginBottom: 10,
+    marginRight: 10,
+    // flexDirection: 'row',
+    // justifyContent: 'space-between',
+    // alignItems: 'center',
+  },
+
+  addButton: {
+    textAlign: 'center',
   },
   prevNextButtons: {
     padding: 5,

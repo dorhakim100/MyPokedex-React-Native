@@ -2,7 +2,7 @@ import { Button, Image, StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 
 import Screen from './Screen'
-import CustomTextInput from '../cmps/CustomTextInput'
+import CustomTextInput from '../cmps/forms/CustomTextInput'
 import CustomButton from '../cmps/CustomButton'
 
 import * as Yup from 'yup'
@@ -14,7 +14,7 @@ import AntDesign from '@expo/vector-icons/AntDesign'
 import MaterialIcons from '@expo/vector-icons/MaterialIcons'
 
 import CustomText from '../cmps/CustomText'
-import CustomFormikForm from '../cmps/CustomFormikForm'
+import CustomFormikForm from '../cmps/forms/CustomFormikForm'
 
 import defaultStyles from '../config/styles'
 import { makeId } from '../services/utils'
@@ -48,6 +48,7 @@ export default function SignupScreen({ navigation }) {
         />
       ),
       autoCapitalize: 'words',
+      type: 'text',
     },
     {
       key: makeId(),
@@ -61,6 +62,7 @@ export default function SignupScreen({ navigation }) {
         />
       ),
       autoCapitalize: 'none',
+      type: 'text',
     },
     {
       key: makeId(),
@@ -75,6 +77,7 @@ export default function SignupScreen({ navigation }) {
       ),
       isPassword: true,
       autoCapitalize: 'none',
+      type: 'text',
     },
     {
       key: makeId(),
@@ -85,6 +88,7 @@ export default function SignupScreen({ navigation }) {
       ),
       autoCapitalize: 'none',
       keyboardType: 'email-address',
+      type: 'text',
     },
     {
       key: makeId(),
@@ -94,12 +98,13 @@ export default function SignupScreen({ navigation }) {
         <Entypo name='phone' size={24} color={defaultStyles.colors.subText} />
       ),
       keyboardType: 'numeric',
+      type: 'text',
     },
   ]
 
   const navigateToAccount = () =>
     navigation.replace('Main', { screen: 'Account' })
-  const navigateToSignup = () => navigation.replace('Signup')
+  const navigateToLogin = () => navigation.replace('Login')
 
   function onSubmit(values) {
     console.log(values)
