@@ -5,8 +5,6 @@ import { capitalizeFirstLetter } from '../services/utils'
 const screenWidth = Dimensions.get('window').width
 
 function Types({ types, isSprite }) {
-  // const grass = require('../imgs/types/png/Pokemon_Type_Icon_Grass.png')
-
   const [pngTypes, setPngTypes] = useState([])
 
   useEffect(() => {
@@ -81,7 +79,7 @@ function Types({ types, isSprite }) {
 
 const styles = StyleSheet.create({
   container: {
-    paddingTop: 10,
+    // paddingTop: 10,
     justifyContent: 'flex-start',
     alignPokemons: 'center',
 

@@ -79,6 +79,7 @@ export default function CustomPicker({
             renderItem={({ item }) => (
               <PickerItem
                 label={item.label}
+                icon={item.icon}
                 onPress={() => {
                   item.onPress(item.label.toLowerCase())
 

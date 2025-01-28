@@ -14,10 +14,13 @@ import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons'
 import defaultStyles from '../config/styles'
 import { addNewPokemon, addPokemon } from '../store/actions/pokemon.actions'
 import { pokemonService } from '../services/pokemon/pokemon.service'
+import Types from '../cmps/Types'
 
 const validationSchema = Yup.object().shape({
   name: Yup.string().required().min(2).label('Name'),
   region: Yup.string().required().label('Region'),
+  images: Yup.array().required().min(3).label('Images'),
+  types: Yup.array().required().min(1).label('Types'),
 })
 
 export default function AddScreen({ navigation }) {
@@ -48,6 +51,103 @@ export default function AddScreen({ navigation }) {
 
       name: 'images',
       type: 'imagePicker',
+    },
+    {
+      name: 'types',
+      type: 'check',
+
+      options: [
+        {
+          label: 'bug',
+          value: 1,
+          icon: <Types types={['bug']} />,
+        },
+        {
+          label: 'dark',
+          value: 2,
+          icon: <Types types={['dark']} />,
+        },
+        {
+          label: 'dragon',
+          value: 3,
+          icon: <Types types={['dragon']} />,
+        },
+        {
+          label: 'electric',
+          value: 4,
+          icon: <Types types={['electric']} />,
+        },
+        {
+          label: 'fairy',
+          value: 5,
+          icon: <Types types={['fairy']} />,
+        },
+        {
+          label: 'fighting',
+          value: 6,
+          icon: <Types types={['fighting']} />,
+        },
+        {
+          label: 'fire',
+          value: 7,
+          icon: <Types types={['fire']} />,
+        },
+        {
+          label: 'flying',
+          value: 8,
+          icon: <Types types={['flying']} />,
+        },
+        {
+          label: 'ghost',
+          value: 9,
+          icon: <Types types={['ghost']} />,
+        },
+        {
+          label: 'grass',
+          value: 10,
+          icon: <Types types={['grass']} />,
+        },
+        {
+          label: 'ground',
+          value: 11,
+          icon: <Types types={['ground']} />,
+        },
+        {
+          label: 'ice',
+          value: 12,
+          icon: <Types types={['ice']} />,
+        },
+        {
+          label: 'normal',
+          value: 13,
+          icon: <Types types={['normal']} />,
+        },
+        {
+          label: 'poison',
+          value: 14,
+          icon: <Types types={['poison']} />,
+        },
+        {
+          label: 'psychic',
+          value: 15,
+          icon: <Types types={['psychic']} />,
+        },
+        {
+          label: 'rock',
+          value: 16,
+          icon: <Types types={['rock']} />,
+        },
+        {
+          label: 'steel',
+          value: 17,
+          icon: <Types types={['steel']} />,
+        },
+        {
+          label: 'water',
+          value: 18,
+          icon: <Types types={['water']} />,
+        },
+      ],
     },
     {
       placeholder: 'Region',
@@ -119,6 +219,7 @@ export default function AddScreen({ navigation }) {
     name: '',
     region: '',
     images: [],
+    types: [],
   })
 
   //   useEffect(() => {
@@ -131,7 +232,7 @@ export default function AddScreen({ navigation }) {
 
   async function onSubmit(values) {
     console.log(values)
-    const { name, region, images } = values
+    const { name, region, images, types } = values
     if (images.length < 3) {
       for (let i = 0; i < 3; i++) {
         if (!images[i]) {
@@ -141,13 +242,13 @@ export default function AddScreen({ navigation }) {
     }
     console.log(images)
     const newSprites = {
-      artwork: images[0],
-      home: images[1],
+      artwork: images[0].uri,
+      home: images[1].uri,
 
-      pixel: images[2],
+      pixel: images[2].uri,
     }
     const pokemon = pokemonService.getEmptyPokemon()
-    addNewPokemon({ ...pokemon, name, region, sprites: newSprites })
+    addNewPokemon({ ...pokemon, name, region, sprites: newSprites, types })
     navigateToMain()
   }
 

@@ -12,12 +12,14 @@ import defaultStyles from '../config/styles'
 export default function PickerItem({ label, onPress, icon }) {
   return (
     <TouchableOpacity onPress={onPress} style={styles.container}>
-      <MaterialIcons
-        name='catching-pokemon'
-        size={50}
-        color={getRandomDarkHexColor()}
-        style={styles.icon}
-      />
+      {(icon && icon) || (
+        <MaterialIcons
+          name='catching-pokemon'
+          size={50}
+          color={getRandomDarkHexColor()}
+          style={styles.icon}
+        />
+      )}
       <CustomText style={styles.text}>{label}</CustomText>
     </TouchableOpacity>
   )

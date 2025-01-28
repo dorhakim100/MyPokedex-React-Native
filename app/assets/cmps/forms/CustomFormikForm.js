@@ -10,6 +10,7 @@ import CustomTextInput from './CustomTextInput'
 import defaultStyles from '../../config/styles'
 import CustomPicker from '../CustomPicker'
 import CustomImagePicker from '../CustomImagePicker'
+import CustomCheckInput from '../CustomCheckInput'
 
 export default function CustomFormikForm({
   inputs,
@@ -65,6 +66,27 @@ export default function CustomFormikForm({
                   }
 
                   break
+                case 'check':
+                  input.options.map((option) => {
+                    option.onPress = () => {
+                      if (values[input.name].includes(option.label)) {
+                        const idx = values[input.name].findIndex(
+                          (value) => value === option.label
+                        )
+                        values[input.name].splice(idx, 1)
+                        setFieldValue(input.name, [...values[input.name]])
+                        return
+                      }
+                      if (values[input.name].length > 1) {
+                        values[input.name].splice(0, 1, option.label)
+                      } else {
+                        values[input.name].push(option.label)
+                      }
+                      setFieldValue(input.name, [...values[input.name]])
+                    }
+                  })
+
+                  break
 
                 default:
                   break
@@ -98,6 +120,12 @@ export default function CustomFormikForm({
                     )) ||
                     (input.type === 'imagePicker' && (
                       <CustomImagePicker input={input} />
+                    )) ||
+                    (input.type === 'check' && (
+                      <CustomCheckInput
+                        items={input.options}
+                        values={values[input.name]}
+                      />
                     ))}
 
                   {touched[input.name] && errors[input.name] && (

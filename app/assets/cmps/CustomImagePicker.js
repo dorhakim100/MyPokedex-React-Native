@@ -1,4 +1,12 @@
-import { Alert, StyleSheet, Text, View, Image, ScrollView } from 'react-native'
+import {
+  Alert,
+  StyleSheet,
+  Text,
+  View,
+  Image,
+  ScrollView,
+  TouchableOpacity,
+} from 'react-native'
 import React, { useEffect, useState } from 'react'
 
 import * as ImagePicker from 'expo-image-picker'
@@ -8,9 +16,7 @@ import CustomButton from './CustomButton'
 import { makeId } from '../services/utils'
 
 export default function CustomImagePicker({ input }) {
-  const [imagesUri, setImagesUri] = useState([
-    'https://t3.ftcdn.net/jpg/05/16/27/58/360_F_516275801_f3Fsp17x6HQK0xQgDQEELoTuERO4SsWV.jpg',
-  ])
+  const [imagesUri, setImagesUri] = useState([])
   useEffect(() => {
     askPermission()
   }, [])
@@ -34,13 +40,10 @@ export default function CustomImagePicker({ input }) {
       if (!res.canceled) {
         const img = res.assets[0].uri
         let newImages
-        if (
-          imagesUri[0] ===
-          'https://t3.ftcdn.net/jpg/05/16/27/58/360_F_516275801_f3Fsp17x6HQK0xQgDQEELoTuERO4SsWV.jpg'
-        ) {
-          newImages = [img]
+        if (!imagesUri[0]) {
+          newImages = [{ uri: img, id: makeId() }]
         } else {
-          newImages = [...imagesUri, img]
+          newImages = [...imagesUri, { uri: img, id: makeId() }]
         }
         console.log(newImages)
         setImagesUri(newImages)
@@ -51,24 +54,54 @@ export default function CustomImagePicker({ input }) {
     }
   }
 
+  const onRemovePhoto = (imageId) => {
+    Alert.alert(
+      'Remove Photo', // Title of the alert
+      'Do you want to remove the selected photo?', // Message
+      [
+        {
+          text: 'Cancel', // Button text
+          onPress: () => console.log('Cancel Pressed'),
+          style: 'cancel', // Optional: styles the button as a cancel button
+        },
+        { text: 'OK', onPress: () => removeImg(imageId) },
+      ]
+    )
+    return
+  }
+
+  const removeImg = (imageId) => {
+    const newImages = imagesUri
+    const idx = newImages.findIndex((image) => image.id === imageId)
+    newImages.splice(idx, 1)
+    setImagesUri([...newImages])
+  }
+
   return (
     <View style={styles.container}>
       <ScrollView
         contentContainerStyle={styles.imgsContainer}
         horizontal
-        showsHorizontalScrollIndicator={true}
+        showsHorizontalScrollIndicator={false}
       >
-        {imagesUri.map((uri) => {
-          return (
-            <Image
-              key={uri + makeId()}
-              source={{
-                uri,
-              }}
-              style={styles.img}
-            />
-          )
-        })}
+        {(imagesUri[0] &&
+          imagesUri.map((image) => {
+            return (
+              <TouchableOpacity
+                onPress={() => onRemovePhoto(image.id)}
+                key={image.id}
+              >
+                <Image
+                  source={{
+                    uri: image.uri,
+                  }}
+                  style={styles.img}
+                />
+              </TouchableOpacity>
+            )
+          })) || (
+          <Image source={require('../imgs/camera.jpg')} style={styles.img} />
+        )}
       </ScrollView>
       <CustomButton handlePress={selectImage}>Upload</CustomButton>
     </View>
@@ -93,6 +126,7 @@ const styles = StyleSheet.create({
     width: 100,
     height: 100,
     borderRadius: 50,
+    marginBottom: 10,
   },
 
   iconContainer: {
