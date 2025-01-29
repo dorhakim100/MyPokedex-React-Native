@@ -9,6 +9,7 @@ import { Text, BottomNavigation } from 'react-native-paper'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 import MaterialIcons from '@expo/vector-icons/MaterialIcons'
 import Feather from '@expo/vector-icons/Feather'
+import { FAB } from 'react-native-paper'
 
 import ListScreen from '../Screens/ListScreen'
 import WelcomeScreen from '../Screens/WelcomeScreen'
@@ -21,6 +22,9 @@ import colors from '../config/color'
 import MyList from '../Screens/MyList'
 import AddScreen from '../Screens/AddScreen'
 
+import defaultStyles from '../config/styles'
+import NewListingButton from './NewListingButton'
+
 const Tab = createBottomTabNavigator()
 const Stack = createStackNavigator()
 
@@ -32,45 +36,77 @@ function CustomBottomNavigation() {
         headerShown: false,
       }}
       tabBar={({ navigation, state, descriptors, insets }) => (
-        <BottomNavigation.Bar
-          navigationState={state}
-          safeAreaInsets={insets}
-          onTabPress={({ route, preventDefault }) => {
-            const event = navigation.emit({
-              type: 'tabPress',
-              target: route.key,
-              canPreventDefault: true,
-            })
-
-            if (event.defaultPrevented) {
-              preventDefault()
-            } else {
-              navigation.dispatch({
-                ...CommonActions.navigate(route.name, route.params),
-                target: state.key,
+        <>
+          <BottomNavigation.Bar
+            navigationState={state}
+            safeAreaInsets={insets}
+            activeColor={defaultStyles.colors.mainRed}
+            style={{}}
+            activeIndicatorStyle={{
+              // fontSize: 50,
+              // padding: 20,
+              backgroundColor:
+                state.index === 1 ? colors.lightGray : colors.softPurple, // Keep default when not active
+            }}
+            onTabPress={({ route, preventDefault }) => {
+              const event = navigation.emit({
+                type: 'tabPress',
+                target: route.key,
+                canPreventDefault: true,
               })
-            }
-          }}
-          renderIcon={({ route, focused, color }) => {
-            const { options } = descriptors[route.key]
-            if (options.tabBarIcon) {
-              return options.tabBarIcon({ focused, color, size: 24 })
-            }
 
-            return null
-          }}
-          getLabelText={({ route }) => {
-            const { options } = descriptors[route.key]
-            const label =
-              options.tabBarLabel !== undefined
-                ? options.tabBarLabel
-                : options.title !== undefined
-                ? options.title
-                : route.title
+              if (event.defaultPrevented) {
+                preventDefault()
+              } else {
+                navigation.dispatch({
+                  ...CommonActions.navigate(route.name, route.params),
+                  target: state.key,
+                })
+              }
+            }}
+            renderIcon={({ route, focused, color }) => {
+              const { options } = descriptors[route.key]
+              if (options.tabBarIcon) {
+                return options.tabBarIcon({ focused, color, size: 24 })
+              }
 
-            return label
-          }}
-        />
+              return null
+            }}
+            getLabelText={({ route }) => {
+              const { options } = descriptors[route.key]
+              const label =
+                options.tabBarLabel !== undefined
+                  ? options.tabBarLabel
+                  : options.title !== undefined
+                  ? options.title
+                  : route.title
+
+              return label
+            }}
+          />
+          <FAB
+            size='small'
+            style={{
+              position: 'absolute',
+              bottom: 70,
+              borderRadius: 50,
+              alignSelf: 'center',
+
+              backgroundColor:
+                state.index === 1 ? colors.mainRedLight : colors.lightGray,
+              color:
+                state.index === 1 ? colors.strongWhite : colors.mainRedLight,
+            }}
+            icon={({ size, color }) => (
+              <MaterialIcons
+                name='explore' // Change to "compass" if using another icon set
+                size={size}
+                color={state.index === 1 ? colors.black : colors.darkGray}
+              />
+            )}
+            onPress={() => navigation.navigate('Explore')} // Navigate manually
+          />
+        </>
       )}
     >
       {/* <Tab.Screen
@@ -94,6 +130,7 @@ function CustomBottomNavigation() {
         component={DetailsScreen}
         options={{
           tabBarLabel: 'Details',
+          tabBarButton: (props) => <NewListingButton {...props} />,
           tabBarIcon: ({ focused, color, size }) => {
             return (
               <MaterialIcons
@@ -112,17 +149,17 @@ function CustomBottomNavigation() {
           tabBarLabel: 'Explore',
 
           tabBarIcon: ({ color, size, focused }) => {
-            return (
-              <MaterialIcons
-                name='explore'
-                size={size}
-                color={focused ? colors.mainRed : color}
-              />
-            )
+            // return (
+            //   <MaterialIcons
+            //     name='explore'
+            //     size={size}
+            //     color={focused ? colors.mainRed : color}
+            //   />
+            // )
           },
         }}
       />
-      <Tab.Screen
+      {/* <Tab.Screen
         name='List'
         component={MyList}
         options={{
@@ -137,7 +174,7 @@ function CustomBottomNavigation() {
             )
           },
         }}
-      />
+      /> */}
       <Tab.Screen
         name='Account'
         component={AccountScreen}
@@ -182,14 +219,19 @@ export default function AppNavigator() {
   return (
     <Stack.Navigator
       initialRouteName='Welcome' // Set the welcome screen as the initial screen
-      screenOptions={{ headerShown: false }}
+      screenOptions={{ headerShown: true, headerTitle: '' }}
     >
       <Stack.Screen name='Welcome' component={WelcomeScreen} />
       <Stack.Screen name='Login' component={LoginScreen} />
       <Stack.Screen name='Signup' component={SignupScreen} />
 
-      <Stack.Screen name='Main' component={CustomBottomNavigation} />
+      <Stack.Screen
+        name='Main'
+        component={CustomBottomNavigation}
+        options={{ headerShown: false }}
+      />
       <Stack.Screen name='Add' component={AddScreen} />
+      <Stack.Screen name='List' component={MyList} />
     </Stack.Navigator>
   )
 }

@@ -33,6 +33,7 @@ const colors = {
   darkGray: '#141414',
   lightGray: '#F0F0F0',
   error: '#FF4D4F',
+  softPurple: '#E6E0FF',
 }
 
 export default colors

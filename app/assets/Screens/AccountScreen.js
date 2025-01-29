@@ -11,6 +11,7 @@ import PokemonPreview from '../cmps/PokemonPreview'
 import CustomListSection from '../cmps/CustomListSection'
 import colors from '../config/color'
 import ListItemSeparator from '../cmps/ListItemSeparator'
+import CustomMap from '../cmps/CustomMap'
 
 export default function AccountScreen({ navigation }) {
   const profile = {
@@ -48,6 +49,15 @@ export default function AccountScreen({ navigation }) {
         ))}
       </View>
       <CustomListSection icon={<LogoutIcon />}>Log Out</CustomListSection>
+      <CustomMap
+        cords={{
+          latitude: 32.1845,
+          longitude: 34.8706,
+          latitudeDelta: 0.05,
+          longitudeDelta: 0.05,
+        }}
+        isFixed={true}
+      />
     </Screen>
   )
 }

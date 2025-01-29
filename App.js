@@ -21,7 +21,8 @@ import {
 } from 'react-native'
 import { GestureHandlerRootView } from 'react-native-gesture-handler'
 
-import CustomBottomNavigation from './app/assets/cmps/BottomNavigation.js'
+import CustomBottomNavigation from './app/assets/navigation/BottomNavigation.js'
+import NavigationTheme from './app/assets/navigation/NavigationTheme.js'
 
 const Stack = createStackNavigator()
 
@@ -30,15 +31,7 @@ export default function App() {
     <Provider store={store}>
       <GestureHandlerRootView>
         <PaperProvider>
-          <NavigationContainer>
-            <SafeAreaView>
-              {/* <Stack.Navigator initialRouteName='Home'>
-            <Stack.Screen name='Home' component={WelcomeScreen} />
-            <Stack.Screen name='List' component={ListScreen} />
-            <Stack.Screen name='Details' component={DetailsScreen} />
-          </Stack.Navigator> */}
-            </SafeAreaView>
-
+          <NavigationContainer theme={NavigationTheme}>
             <CustomBottomNavigation />
           </NavigationContainer>
         </PaperProvider>

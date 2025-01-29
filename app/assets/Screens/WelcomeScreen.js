@@ -17,8 +17,8 @@ import CustomButton from '../cmps/CustomButton'
 
 function WelcomeScreen({ navigation }) {
   const navigateToList = () => navigation.replace('Main') // replace for disabling navigation back, navigation.navigate for going back
-  const navigateToLogin = () => navigation.replace('Login')
-  const navigateToSignup = () => navigation.replace('Signup')
+  const navigateToLogin = () => navigation.navigate('Login')
+  const navigateToSignup = () => navigation.navigate('Signup')
   const navigateToAccount = () =>
     navigation.replace('Main', { screen: 'Account' }) // for navigating to a screen within bottom navigation
   return (
