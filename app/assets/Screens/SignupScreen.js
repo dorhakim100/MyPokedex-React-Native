@@ -19,6 +19,8 @@ import CustomFormikForm from '../cmps/forms/CustomFormikForm'
 import defaultStyles from '../config/styles'
 import { makeId } from '../services/utils'
 
+import paths from '../navigation/routes'
+
 const validationSchema = Yup.object().shape({
   fullname: Yup.string().required().min(2).label('Fullname'),
   username: Yup.string().required().min(2).label('Username'),
@@ -110,8 +112,8 @@ export default function SignupScreen({ navigation }) {
   ]
 
   const navigateToAccount = () =>
-    navigation.replace('Main', { screen: 'Account' })
-  const navigateToLogin = () => navigation.replace('Login')
+    navigation.replace(paths.MAIN, { screen: paths.ACCOUNT })
+  const navigateToLogin = () => navigation.replace(paths.LOGIN)
 
   function onSubmit(values) {
     console.log(values)

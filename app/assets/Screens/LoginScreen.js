@@ -23,6 +23,7 @@ import MaterialIcons from '@expo/vector-icons/MaterialIcons'
 
 import defaultStyles from '../config/styles'
 import { makeId } from '../services/utils'
+import paths from '../navigation/routes'
 
 const validationSchema = Yup.object().shape({
   username: Yup.string().required().min(2).label('Username'),
@@ -68,8 +69,8 @@ export default function LoginScreen({ navigation }) {
   ]
 
   const navigateToAccount = () =>
-    navigation.replace('Main', { screen: 'Account' })
-  const navigateToSignup = () => navigation.replace('Signup')
+    navigation.replace(paths.MAIN, { screen: paths.ACCOUNT })
+  const navigateToSignup = () => navigation.replace(paths.SIGNUP)
 
   function onSubmit(values) {
     console.log(values)

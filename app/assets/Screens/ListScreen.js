@@ -39,6 +39,7 @@ import {
   removePokemon,
 } from '../store/actions/pokemon.actions'
 import colors from '../config/color'
+import paths from '../navigation/routes'
 
 const screenWidth = Dimensions.get('window').width
 const screenHeight = Dimensions.get('window').height
@@ -56,7 +57,7 @@ function ListScreen({ navigation }) {
 
   const swipeableRef = useRef(null)
 
-  const navigateToAdd = () => navigation.navigate('Add')
+  const navigateToAdd = () => navigation.navigate(paths.ADD)
 
   const swipeable = {
     backgroundColor: colors.addGreen,
@@ -115,7 +116,7 @@ function ListScreen({ navigation }) {
 
   const setPokemon = (pokemonId) => {
     loadPokemon(pokemonId)
-    navigation.navigate('Details')
+    navigation.navigate(paths.DETAILS)
   }
 
   const handleAdd = async (pokemon, swipeableRef) => {

@@ -16,6 +16,8 @@ import { addNewPokemon, addPokemon } from '../store/actions/pokemon.actions'
 import { pokemonService } from '../services/pokemon/pokemon.service'
 import Types from '../cmps/Types'
 
+import paths from '../navigation/routes'
+
 const validationSchema = Yup.object().shape({
   name: Yup.string().required().min(2).label('Name'),
   region: Yup.string().required().label('Region'),
@@ -253,7 +255,7 @@ export default function AddScreen({ navigation }) {
   }
 
   const navigateToMain = () => {
-    navigation.replace('Main')
+    navigation.replace(paths.MAIN)
   }
 
   return (

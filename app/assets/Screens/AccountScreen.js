@@ -13,6 +13,8 @@ import colors from '../config/color'
 import ListItemSeparator from '../cmps/ListItemSeparator'
 import CustomMap from '../cmps/CustomMap'
 
+import paths from '../navigation/routes'
+
 export default function AccountScreen({ navigation }) {
   const profile = {
     name: 'Dor Hakim',
@@ -32,7 +34,7 @@ export default function AccountScreen({ navigation }) {
   ]
 
   function navigateToMyList() {
-    navigation.navigate('List')
+    navigation.navigate(paths.LIST)
   }
 
   return (

@@ -17,6 +17,8 @@ import colors from '../config/color'
 import { pokemonService } from '../services/pokemon/pokemon.service'
 import CustomText from '../cmps/CustomText'
 
+import paths from '../navigation/routes'
+
 function MyList({ navigation }) {
   const myPokemons = useSelector(
     (stateSelector) => stateSelector.pokemonModule.myPokemons
@@ -32,7 +34,7 @@ function MyList({ navigation }) {
   const setPokemon = async (pokemonId) => {
     await loadPokemons(pokemonService.getDefaultFilter())
     loadPokemon(pokemonId)
-    navigation.navigate('Details')
+    navigation.navigate(paths.DETAILS)
   }
 
   const handleDelete = (pokemon, swipeableRef) => {

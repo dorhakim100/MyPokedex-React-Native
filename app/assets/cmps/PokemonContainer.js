@@ -9,6 +9,7 @@ import {
   TouchableWithoutFeedback,
   Platform,
   Switch,
+  TouchableOpacity,
 } from 'react-native'
 
 import Types from './Types'
@@ -16,19 +17,25 @@ import Types from './Types'
 import { capitalizeFirstLetter, getFormattedNum } from '../services/utils'
 import { LinearGradient } from 'react-native-svg'
 import colors from '../config/color'
+import CustomText from './CustomText'
 
 const screenWidth = Dimensions.get('window').width
 
 const PokemonContainer = ({ currPokemon, onPress }) => {
-  const [isShiny, setIsShiny] = useState(false)
-  console.log(currPokemon)
+  const [isHome, setIsHome] = useState(false)
+
   return (
     <TouchableWithoutFeedback onPress={onPress}>
       <View style={styles.container}>
-        <Switch value={isShiny} onValueChange={(value) => setIsShiny(value)} />
+        <View style={styles.switchContainer}>
+          <TouchableOpacity onPress={() => setIsHome(!isHome)}>
+            <CustomText>Home Sprite</CustomText>
+          </TouchableOpacity>
+          <Switch value={isHome} onValueChange={(value) => setIsHome(value)} />
+        </View>
         <Image
           source={{
-            uri: isShiny
+            uri: isHome
               ? currPokemon.sprites.home
               : currPokemon.sprites.artwork,
           }}
@@ -64,6 +71,13 @@ const styles = StyleSheet.create({
     width: screenWidth * 0.9,
 
     alignSelf: 'center',
+  },
+
+  switchContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+
+    gap: 10,
   },
 
   nameContainer: {

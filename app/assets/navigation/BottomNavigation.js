@@ -25,13 +25,15 @@ import AddScreen from '../Screens/AddScreen'
 import defaultStyles from '../config/styles'
 import NewListingButton from './NewListingButton'
 
+import paths from './routes'
+
 const Tab = createBottomTabNavigator()
 const Stack = createStackNavigator()
 
 function CustomBottomNavigation() {
   return (
     <Tab.Navigator
-      initialRouteName='Explore'
+      initialRouteName={paths.EXPLORE}
       screenOptions={{
         headerShown: false,
       }}
@@ -85,7 +87,8 @@ function CustomBottomNavigation() {
             }}
           />
           <FAB
-            size='small'
+            // size='small'
+            size='medium'
             style={{
               position: 'absolute',
               bottom: 70,
@@ -104,7 +107,8 @@ function CustomBottomNavigation() {
                 color={state.index === 1 ? colors.black : colors.darkGray}
               />
             )}
-            onPress={() => navigation.navigate('Explore')} // Navigate manually
+            // icon={'compass'}
+            onPress={() => navigation.navigate(paths.EXPLORE)} // Navigate manually
           />
         </>
       )}
@@ -126,10 +130,10 @@ function CustomBottomNavigation() {
         }}
       /> */}
       <Tab.Screen
-        name='Details'
+        name={paths.DETAILS}
         component={DetailsScreen}
         options={{
-          tabBarLabel: 'Details',
+          tabBarLabel: paths.DETAILS,
           tabBarButton: (props) => <NewListingButton {...props} />,
           tabBarIcon: ({ focused, color, size }) => {
             return (
@@ -143,10 +147,10 @@ function CustomBottomNavigation() {
         }}
       />
       <Tab.Screen
-        name='Explore'
+        name={paths.EXPLORE}
         component={ListScreen}
         options={{
-          tabBarLabel: 'Explore',
+          tabBarLabel: paths.EXPLORE,
 
           tabBarIcon: ({ color, size, focused }) => {
             // return (
@@ -176,10 +180,10 @@ function CustomBottomNavigation() {
         }}
       /> */}
       <Tab.Screen
-        name='Account'
+        name={paths.ACCOUNT}
         component={AccountScreen}
         options={{
-          tabBarLabel: 'Account',
+          tabBarLabel: paths.ACCOUNT,
 
           tabBarIcon: ({ focused, color, size }) => {
             return (
@@ -218,20 +222,20 @@ const styles = StyleSheet.create({
 export default function AppNavigator() {
   return (
     <Stack.Navigator
-      initialRouteName='Welcome' // Set the welcome screen as the initial screen
+      initialRouteName={paths.WELCOME} // Set the welcome screen as the initial screen
       screenOptions={{ headerShown: true, headerTitle: '' }}
     >
-      <Stack.Screen name='Welcome' component={WelcomeScreen} />
-      <Stack.Screen name='Login' component={LoginScreen} />
-      <Stack.Screen name='Signup' component={SignupScreen} />
+      <Stack.Screen name={paths.WELCOME} component={WelcomeScreen} />
+      <Stack.Screen name={paths.LOGIN} component={LoginScreen} />
+      <Stack.Screen name={paths.SIGNUP} component={SignupScreen} />
 
       <Stack.Screen
-        name='Main'
+        name={paths.MAIN}
         component={CustomBottomNavigation}
         options={{ headerShown: false }}
       />
-      <Stack.Screen name='Add' component={AddScreen} />
-      <Stack.Screen name='List' component={MyList} />
+      <Stack.Screen name={paths.ADD} component={AddScreen} />
+      <Stack.Screen name={paths.LIST} component={MyList} />
     </Stack.Navigator>
   )
 }

@@ -15,12 +15,14 @@ import { StyleSheet } from 'react-native'
 
 import CustomButton from '../cmps/CustomButton'
 
+import paths from '../navigation/routes'
+
 function WelcomeScreen({ navigation }) {
-  const navigateToList = () => navigation.replace('Main') // replace for disabling navigation back, navigation.navigate for going back
-  const navigateToLogin = () => navigation.navigate('Login')
-  const navigateToSignup = () => navigation.navigate('Signup')
+  const navigateToList = () => navigation.replace(paths.MAIN) // replace for disabling navigation back, navigation.navigate for going back
+  const navigateToLogin = () => navigation.navigate(paths.LOGIN)
+  const navigateToSignup = () => navigation.navigate(paths.SIGNUP)
   const navigateToAccount = () =>
-    navigation.replace('Main', { screen: 'Account' }) // for navigating to a screen within bottom navigation
+    navigation.replace(paths.MAIN, { screen: paths.ACCOUNT }) // for navigating to a screen within bottom navigation
   return (
     <View style={styles.container}>
       <ImageBackground
