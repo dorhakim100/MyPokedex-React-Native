@@ -123,6 +123,7 @@ function ListScreen({ navigation }) {
     swipeableRef?.current.close()
     swipeableRef.current = null
     const pokemonId = pokemon._id
+
     await addPokemon(pokemonId)
   }
 

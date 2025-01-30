@@ -7,7 +7,7 @@ export const ADD_POKEMON = 'ADD_POKEMON'
 export const SET_FILTER = 'SET_FILTER'
 
 const initialState = {
-  pokemons: pokemonService.getPokemons(),
+  pokemons: [],
   currPokemon: pokemonService.getEmptyPokemon(),
   myPokemons: [],
   filter: pokemonService.getDefaultFilter(),

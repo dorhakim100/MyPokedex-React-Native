@@ -34,7 +34,8 @@ function MyList({ navigation }) {
   const setPokemon = async (pokemonId) => {
     await loadPokemons(pokemonService.getDefaultFilter())
     loadPokemon(pokemonId)
-    navigation.navigate(paths.DETAILS)
+
+    navigation.navigate(paths.MAIN, { screen: paths.DETAILS })
   }
 
   const handleDelete = (pokemon, swipeableRef) => {

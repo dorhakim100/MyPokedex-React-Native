@@ -16,11 +16,7 @@ export const pokemonService = {
 async function query(
   filterBy = {
     txt: '',
-    maxPrice: 0,
-    sortDir: '',
-    types: [],
-    pageIdx: 0,
-    isAll: false,
+    region: '',
   }
 ) {
   try {

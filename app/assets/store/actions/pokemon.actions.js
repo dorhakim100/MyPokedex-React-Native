@@ -1,4 +1,4 @@
-import { pokemonService } from '../../services/pokemon/pokemon.service'
+import { pokemonService } from '../../api/listings'
 import { store } from '../store'
 import {
   SET_POKEMON,
@@ -10,7 +10,8 @@ import {
 
 export async function loadPokemons(filterBy) {
   try {
-    const pokemons = await pokemonService.query(filterBy)
+    const res = await pokemonService.query(filterBy)
+    const pokemons = res.data
 
     store.dispatch({
       type: SET_FILTER,
@@ -29,7 +30,8 @@ export async function loadPokemons(filterBy) {
 }
 
 export async function loadPokemon(pokemonId) {
-  const pokemons = pokemonService.getPokemons()
+  const res = await pokemonService.query()
+  const pokemons = res.data
   const pokemon = pokemons.find((mon) => mon._id === pokemonId)
   try {
     store.dispatch({
@@ -52,9 +54,8 @@ export function loadMyPokemons() {
 
 export async function addPokemon(pokemonId) {
   try {
-    const pokemons = await pokemonService.query(
-      pokemonService.getDefaultFilter()
-    )
+    const res = await pokemonService.query(pokemonService.getDefaultFilter())
+    const pokemons = res.data
 
     const pokemonToAdd = pokemons.find((pokemon) => pokemon._id === pokemonId)
 

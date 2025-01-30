@@ -100,7 +100,6 @@ function getEmptyPokemon() {
 }
 function getPokemons() {
   const pokemons = [
-    // Kanto starters
     {
       _id: 1,
       num: 1,
@@ -252,7 +251,6 @@ function getPokemons() {
       },
       region: 'kanto',
     },
-    // Johto starters
     {
       _id: 10,
       num: 152,
