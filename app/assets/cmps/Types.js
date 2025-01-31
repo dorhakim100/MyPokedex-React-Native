@@ -90,8 +90,8 @@ const styles = StyleSheet.create({
     width: 80,
   },
   sprite: {
-    // height: 30,
-    // width: 30,
+    height: 16,
+    width: 50,
   },
 })
 

@@ -11,6 +11,8 @@ import {
 export async function loadPokemons(filterBy) {
   try {
     const res = await pokemonService.query(filterBy)
+    if (!res.ok) throw res
+
     const pokemons = res.data
 
     store.dispatch({
@@ -30,8 +32,10 @@ export async function loadPokemons(filterBy) {
 }
 
 export async function loadPokemon(pokemonId) {
-  const res = await pokemonService.query()
+  const res = await pokemonService.query(pokemonService.getDefaultFilter())
+  if (!res.ok) throw res
   const pokemons = res.data
+
   const pokemon = pokemons.find((mon) => mon._id === pokemonId)
   try {
     store.dispatch({

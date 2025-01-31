@@ -40,6 +40,10 @@ import {
 } from '../store/actions/pokemon.actions'
 import colors from '../config/color'
 import paths from '../navigation/routes'
+import CustomText from '../cmps/CustomText'
+import CustomLottieAnimation from '../cmps/CustomLottieAnimation'
+
+import loader from '../animation/loader/loader.json'
 
 const screenWidth = Dimensions.get('window').width
 const screenHeight = Dimensions.get('window').height
@@ -51,11 +55,15 @@ function ListScreen({ navigation }) {
     (stateSelector) => stateSelector.pokemonModule.pokemons
   )
 
+  const [error, setError] = useState(false)
+
   const [filter, setFilter] = useState(pokemonService.getDefaultFilter())
 
   const [isRefreshing, setIsRefreshing] = useState(false)
 
   const swipeableRef = useRef(null)
+
+  const [isLoading, setIsLoading] = useState(false)
 
   const navigateToAdd = () => navigation.navigate(paths.ADD)
 
@@ -78,6 +86,14 @@ function ListScreen({ navigation }) {
     },
   ]
 
+  const setPokemons = async (filter) => {
+    const res = await loadPokemons(filter)
+    if (res.problem) {
+      setError(true)
+      return
+    }
+  }
+
   function handleRegionChange(region) {
     setFilter({ ...filter, region })
   }
@@ -88,7 +104,11 @@ function ListScreen({ navigation }) {
   }
 
   useEffect(() => {
-    loadPokemons(filter)
+    setIsLoading(true)
+    setPokemons(filter)
+    setTimeout(() => {
+      setIsLoading(false)
+    }, 500)
   }, [filter])
 
   const handleSearchSubmit = (query) => {
@@ -134,6 +154,14 @@ function ListScreen({ navigation }) {
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
         keyboardVerticalOffset={Platform.OS === 'ios' ? headerHeight : 0}
       >
+        {error && (
+          <>
+            <CustomText>Couldn't load Pokemons</CustomText>
+            <CustomButton onPress={() => setPokemons(filter)}>
+              Retry
+            </CustomButton>
+          </>
+        )}
         <CustomPicker
           placeholder={'Region'}
           value={
@@ -151,13 +179,17 @@ function ListScreen({ navigation }) {
             Add
           </CustomButton>
         </View>
-        <PokemonList
-          pokemons={pokemons}
-          setPokemon={setPokemon}
-          isRefreshing={isRefreshing}
-          onSwipePress={handleAdd}
-          swipeable={swipeable}
-        />
+        {(isLoading && (
+          <CustomLottieAnimation animation={loader} visible={isLoading} />
+        )) || (
+          <PokemonList
+            pokemons={pokemons}
+            setPokemon={setPokemon}
+            isRefreshing={isRefreshing}
+            onSwipePress={handleAdd}
+            swipeable={swipeable}
+          />
+        )}
         {/* <ScrollView style={styles.scrollView}>
           {pokemons.map((pokemon) => {
             return (
