@@ -6,10 +6,12 @@ import * as Yup from 'yup'
 import Screen from './Screen'
 import CustomFormikForm from '../cmps/forms/CustomFormikForm'
 import CustomImagePicker from '../cmps/CustomImagePicker.js'
+import UploadScreen from './UploadScreen'
 
 import AntDesign from '@expo/vector-icons/AntDesign'
 import FontAwesome6 from '@expo/vector-icons/FontAwesome6'
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons'
+import Foundation from '@expo/vector-icons/Foundation'
 
 import defaultStyles from '../config/styles'
 import { addNewPokemon, addPokemon } from '../store/actions/pokemon.actions'
@@ -19,6 +21,7 @@ import Types from '../cmps/Types'
 import paths from '../navigation/routes'
 
 const validationSchema = Yup.object().shape({
+  num: Yup.number().required().min(1).label('Number'),
   name: Yup.string().required().min(2).label('Name'),
   region: Yup.string().required().label('Region'),
   images: Yup.array().required().min(3).label('Images'),
@@ -29,6 +32,20 @@ export default function AddScreen({ navigation }) {
   const [region, setRegion] = useState('')
 
   const inputs = [
+    {
+      placeholder: 'Pokemon number',
+      icon: (
+        <Foundation
+          name='list-number'
+          size={24}
+          color={defaultStyles.colors.subText}
+        />
+      ),
+
+      name: 'num',
+      type: 'text',
+      keyboardType: 'numeric',
+    },
     {
       placeholder: 'Pokemon name',
       icon: (
@@ -218,48 +235,89 @@ export default function AddScreen({ navigation }) {
   ]
 
   const [values, setValues] = useState({
+    num: '',
     name: '',
     region: '',
     images: [],
     types: [],
   })
 
-  //   useEffect(() => {
-  //     // console.log(values)
-  //   }, [values])
+  const [uploadVisible, setUploadVisible] = useState(false)
+  const [percentage, setPercentage] = useState(0)
 
   const handleRegionChange = (region) => {
     setValues({ ...values, region })
   }
 
   async function onSubmit(values) {
-    console.log(values)
-    const { name, region, images, types } = values
-    if (images.length < 3) {
-      for (let i = 0; i < 3; i++) {
-        if (!images[i]) {
-          images[i] = images[0]
+    try {
+      setUploadVisible(true)
+
+      const { num, name, region, images, types } = values
+      if (images.length < 3) {
+        for (let i = 0; i < 3; i++) {
+          if (!images[i]) {
+            images[i] = images[0]
+          }
         }
       }
-    }
-    console.log(images)
-    const newSprites = {
-      artwork: images[0].uri,
-      home: images[1].uri,
 
-      pixel: images[2].uri,
+      const newSprites = {
+        artwork: images[0].uri,
+        home: images[1].uri,
+
+        pixel: images[2].uri,
+      }
+      const pokemon = pokemonService.getEmptyPokemon()
+
+      await addNewPokemon(
+        {
+          ...pokemon,
+          num: +num,
+          name,
+          region,
+          sprites: newSprites,
+          types,
+        },
+        onProgress
+      )
+      mimicProgress()
+
+      // navigateToMain()
+    } catch (err) {
+      console.log(err)
     }
-    const pokemon = pokemonService.getEmptyPokemon()
-    addNewPokemon({ ...pokemon, name, region, sprites: newSprites, types })
-    navigateToMain()
   }
 
+  useEffect(() => {
+    console.log(percentage)
+  }, [percentage])
+
   const navigateToMain = () => {
+    setUploadVisible(false)
+
     navigation.replace(paths.MAIN)
+  }
+
+  function mimicProgress() {
+    for (let i = 0; i <= 100; i++) {
+      setTimeout(() => {
+        setPercentage(i)
+      }, 25 * i)
+    }
+  }
+
+  function onProgress(per) {
+    setPercentage(per)
   }
 
   return (
     <Screen>
+      <UploadScreen
+        progress={percentage}
+        visible={uploadVisible}
+        navigate={navigateToMain}
+      />
       <CustomFormikForm
         inputs={inputs}
         button={'Add'}

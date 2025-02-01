@@ -7,14 +7,15 @@ import {
   ADD_POKEMON,
   SET_FILTER,
 } from '../reducers/pokemon.reducer'
+import { makeId } from '../../services/util.service'
 
 export async function loadPokemons(filterBy) {
   try {
     const res = await pokemonService.query(filterBy)
+
     if (!res.ok) throw res
 
     const pokemons = res.data
-
     store.dispatch({
       type: SET_FILTER,
       filterToSet: filterBy,
@@ -72,11 +73,18 @@ export async function addPokemon(pokemonId) {
   }
 }
 
-export function addNewPokemon(pokemonToAdd) {
-  store.dispatch({
-    type: ADD_POKEMON,
-    pokemonToAdd,
-  })
+export async function addNewPokemon(pokemonToAdd, onProgress) {
+  try {
+    const res = await pokemonService.post(pokemonToAdd, onProgress)
+    const savedPokemon = res.data
+    store.dispatch({
+      type: ADD_POKEMON,
+      pokemonToAdd: savedPokemon,
+    })
+    return savedPokemon
+  } catch (err) {
+    throw err
+  }
 }
 
 export function removePokemon(pokemonId) {

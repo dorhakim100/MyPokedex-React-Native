@@ -26,6 +26,7 @@ import { pokemonService } from '../services/pokemon/pokemon.service'
 const screenWidth = Dimensions.width
 
 function DetailsScreen() {
+  console.log('bla')
   const currPokemon = useSelector(
     (stateSelector) => stateSelector.pokemonModule.currPokemon
   )

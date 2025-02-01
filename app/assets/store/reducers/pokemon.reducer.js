@@ -42,7 +42,11 @@ export function pokemonReducer(state = initialState, action) {
       )
         return newState
 
-      newState = { ...state, myPokemons: [pokemonToAdd, ...pokemons] }
+      newState = {
+        ...state,
+        myPokemons: [pokemonToAdd, ...pokemons],
+        pokemons: [...pokemons, pokemonToAdd],
+      }
 
       break
 
