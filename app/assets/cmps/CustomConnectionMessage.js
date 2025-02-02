@@ -12,14 +12,8 @@ import defaultStyles from '../config/styles'
 export default function CustomConnectionMessage({ hasNavigationBar = false }) {
   const netInfo = useNetInfo()
 
-  const [isConnected, setIsConnected] = useState(true)
-
-  useEffect(() => {
-    setIsConnected(netInfo.isInternetReachable)
-  }, [netInfo])
-
-  return (
-    isConnected && (
+  if (netInfo.type !== 'unknown' && netInfo.isInternetReachable === 'false')
+    return (
       <View
         style={{
           ...styles.container,
@@ -36,7 +30,6 @@ export default function CustomConnectionMessage({ hasNavigationBar = false }) {
         </View>
       </View>
     )
-  )
 }
 
 const styles = StyleSheet.create({

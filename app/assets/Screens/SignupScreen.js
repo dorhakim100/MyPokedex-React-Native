@@ -20,6 +20,7 @@ import defaultStyles from '../config/styles'
 import { makeId } from '../services/utils'
 
 import paths from '../navigation/routes'
+import { signup } from '../store/actions/user.actions'
 
 const validationSchema = Yup.object().shape({
   fullname: Yup.string().required().min(2).label('Fullname'),
@@ -115,9 +116,14 @@ export default function SignupScreen({ navigation }) {
     navigation.replace(paths.MAIN, { screen: paths.ACCOUNT })
   const navigateToLogin = () => navigation.replace(paths.LOGIN)
 
-  function onSubmit(values) {
+  async function onSubmit(values) {
     console.log(values)
-    navigateToAccount()
+    try {
+      await signup({ ...values, isAdmin: false })
+      navigateToAccount()
+    } catch (err) {
+      console.log(err)
+    }
   }
 
   return (

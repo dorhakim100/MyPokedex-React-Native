@@ -24,6 +24,7 @@ import MaterialIcons from '@expo/vector-icons/MaterialIcons'
 import defaultStyles from '../config/styles'
 import { makeId } from '../services/utils'
 import paths from '../navigation/routes'
+import { login } from '../store/actions/user.actions'
 
 const validationSchema = Yup.object().shape({
   username: Yup.string().required().min(2).label('Username'),
@@ -36,6 +37,8 @@ export default function LoginScreen({ navigation }) {
     username: '',
     password: '',
   })
+
+  const [loginError, setLoginError] = useState(false)
 
   const inputs = [
     {
@@ -72,9 +75,15 @@ export default function LoginScreen({ navigation }) {
     navigation.replace(paths.MAIN, { screen: paths.ACCOUNT })
   const navigateToSignup = () => navigation.replace(paths.SIGNUP)
 
-  function onSubmit(values) {
-    console.log(values)
-    navigateToAccount()
+  async function onSubmit(values) {
+    try {
+      const res = await login(values)
+      if (!res.ok) return setLoginError(true)
+      setLoginError(false)
+      navigateToAccount()
+    } catch (err) {
+      console.log(err)
+    }
   }
 
   return (
@@ -87,7 +96,11 @@ export default function LoginScreen({ navigation }) {
         onSubmit={onSubmit}
         values={values}
       />
-
+      {loginError && (
+        <CustomText style={defaultStyles.error}>
+          {errors[input.name]}
+        </CustomText>
+      )}
       <View style={styles.buttonContainer}>
         <Button title='Register first' onPress={navigateToSignup} />
       </View>

@@ -89,6 +89,7 @@ function ListScreen({ navigation }) {
 
   const setPokemons = async (filter) => {
     const res = await loadPokemons(filter)
+
     if (res.problem) {
       setError(true)
       return
