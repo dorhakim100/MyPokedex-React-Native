@@ -41,7 +41,9 @@ const styles = StyleSheet.create({
   },
   map: {
     width: '90%', // Slightly reduce width for a better shadow effect
-    height: '90%', // Adjust height as needed
+    // height: '90%', // Adjust height as needed
+    // width: 400,
+    height: 300,
     borderRadius: 15, // Smooth edges
     overflow: 'hidden', // Prevent shadow from getting cut off
     padding: 20,

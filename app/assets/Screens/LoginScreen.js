@@ -78,6 +78,7 @@ export default function LoginScreen({ navigation }) {
   async function onSubmit(values) {
     try {
       const res = await login(values)
+      console.log(res)
       if (!res.ok) return setLoginError(true)
       setLoginError(false)
       navigateToAccount()

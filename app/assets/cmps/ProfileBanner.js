@@ -6,13 +6,18 @@ import colors from '../config/color'
 
 import CustomText from './CustomText'
 
-function ProfileBanner({ profile }) {
+function ProfileBanner({ user }) {
+  console.log(user)
+  const profile = {
+    name: user.fullname,
+    email: user.email,
+  }
   return (
     <View style={styles.container}>
       <MaterialIcons name='account-circle' size={60} color={'tomato'} />
       <View style={styles.nameContainer}>
         <CustomText style={styles.name}>{profile.name}</CustomText>
-        <CustomText style={styles.mail}>{profile.mail}</CustomText>
+        <CustomText style={styles.email}>{profile.email}</CustomText>
       </View>
     </View>
   )
@@ -36,7 +41,7 @@ const styles = StyleSheet.create({
     fontWeight: 700,
     fontSize: 18,
   },
-  mail: {
+  email: {
     fontWeight: 400,
     fontSize: 16,
     color: colors.subText,

@@ -49,6 +49,7 @@ const styles = StyleSheet.create({
   buttonText: {
     color: 'white',
     fontWeight: '800',
+    textAlign: 'center',
     ...Platform.select({
       ios: {
         fontFamily: 'Avenir',

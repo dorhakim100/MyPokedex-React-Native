@@ -14,12 +14,16 @@ import ListItemSeparator from '../cmps/ListItemSeparator'
 import CustomMap from '../cmps/CustomMap'
 
 import paths from '../navigation/routes'
+import { useSelector } from 'react-redux'
+import CustomButton from '../cmps/CustomButton'
 
 export default function AccountScreen({ navigation }) {
   const profile = {
     name: 'Dor Hakim',
     mail: 'dorhakim100@gmail.com',
   }
+
+  const user = useSelector((stateSelector) => stateSelector.userModule.currUser)
 
   const list = [
     {
@@ -36,21 +40,39 @@ export default function AccountScreen({ navigation }) {
   function navigateToMyList() {
     navigation.navigate(paths.LIST)
   }
+  function navigateToMyLogin() {
+    navigation.navigate(paths.LOGIN)
+  }
+  function navigateToMySignup() {
+    navigation.navigate(paths.SIGNUP)
+  }
 
   return (
     <Screen>
-      <ProfileBanner profile={profile} />
-      <View style={styles.listsContainer}>
-        {list.map((item, index) => (
-          <React.Fragment key={index}>
-            <CustomListSection icon={item.icon} onPress={item.onPress}>
-              {item.text}
-            </CustomListSection>
-            {index < list.length - 1 && <ListItemSeparator />}
-          </React.Fragment>
-        ))}
-      </View>
-      <CustomListSection icon={<LogoutIcon />}>Log Out</CustomListSection>
+      {(user && (
+        <>
+          <ProfileBanner user={user} />
+          <View style={styles.listsContainer}>
+            {list.map((item, index) => (
+              <React.Fragment key={index}>
+                <CustomListSection icon={item.icon} onPress={item.onPress}>
+                  {item.text}
+                </CustomListSection>
+                {index < list.length - 1 && <ListItemSeparator />}
+              </React.Fragment>
+            ))}
+          </View>
+          <CustomListSection icon={<LogoutIcon />}>Log Out</CustomListSection>
+        </>
+      )) || (
+        <View style={styles.loginButtonContainer}>
+          <CustomButton handlePress={navigateToMyLogin}>Login</CustomButton>
+          <CustomButton handlePress={navigateToMySignup} secondaryColor={true}>
+            Signup
+          </CustomButton>
+        </View>
+      )}
+
       <CustomMap
         cords={{
           latitude: 32.1845,
@@ -92,7 +114,15 @@ const LogoutIcon = () => {
 }
 
 const styles = StyleSheet.create({
-  container: {},
+  container: {
+    flex: 1,
+  },
+
+  loginButtonContainer: {
+    alignSelf: 'center',
+    marginVertical: 15,
+    gap: 10,
+  },
 
   listsContainer: {
     marginBottom: 20,

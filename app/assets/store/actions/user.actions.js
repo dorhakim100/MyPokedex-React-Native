@@ -34,7 +34,7 @@ export async function login(credentials) {
 
     const user = res.data
 
-    const cart = [...user.items] || []
+    // const cart = [...user.items] || []
 
     // store.dispatch({ type: UPDATE_CART, cart: cart })
     store.dispatch({

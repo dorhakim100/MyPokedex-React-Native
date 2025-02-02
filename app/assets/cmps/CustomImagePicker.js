@@ -3,10 +3,11 @@ import {
   StyleSheet,
   Text,
   View,
+  Image,
   ScrollView,
   TouchableOpacity,
 } from 'react-native'
-import { Image } from 'react-native-expo-image-cache'
+
 import React, { useEffect, useState } from 'react'
 
 import * as ImagePicker from 'expo-image-picker'
@@ -91,7 +92,7 @@ export default function CustomImagePicker({ input }) {
                 onPress={() => onRemovePhoto(image.id)}
                 key={image.id}
               >
-                <Image uri={image.uri} style={styles.img} />
+                <Image source={{ uri: image.uri }} style={styles.img} />
               </TouchableOpacity>
             )
           })) || (
