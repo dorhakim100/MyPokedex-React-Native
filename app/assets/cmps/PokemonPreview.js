@@ -2,13 +2,13 @@ import React, { useState, useEffect, forwardRef, useRef } from 'react'
 import {
   View,
   Text,
-  Image,
   StyleSheet,
   Button,
   Dimensions,
   Platform,
   TouchableHighlight,
 } from 'react-native'
+import { Image } from 'react-native-expo-image-cache'
 
 import Swipeable from 'react-native-gesture-handler/Swipeable'
 import { MaterialCommunityIcons } from '@expo/vector-icons'
@@ -44,10 +44,7 @@ function PokemonPreview({
         <View style={styles.container}>
           <Text style={styles.num}>{getFormattedNum(pokemon.num)}</Text>
 
-          <Image
-            source={{ uri: pokemon.sprites.pixel }}
-            style={styles.sprite}
-          ></Image>
+          <Image uri={pokemon.sprites.pixel} style={styles.sprite}></Image>
 
           <Text style={styles.name} numberOfLines={1}>
             {pokemon.name}

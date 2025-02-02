@@ -2,7 +2,6 @@ import React, { useState } from 'react'
 import {
   View,
   Text,
-  Image,
   StyleSheet,
   Button,
   Dimensions,
@@ -11,6 +10,7 @@ import {
   Switch,
   TouchableOpacity,
 } from 'react-native'
+import { Image } from 'react-native-expo-image-cache'
 
 import Types from './Types'
 
@@ -34,11 +34,7 @@ const PokemonContainer = ({ currPokemon, onPress }) => {
           <Switch value={isHome} onValueChange={(value) => setIsHome(value)} />
         </View>
         <Image
-          source={{
-            uri: isHome
-              ? currPokemon.sprites.home
-              : currPokemon.sprites.artwork,
-          }}
+          uri={isHome ? currPokemon.sprites.home : currPokemon.sprites.artwork}
           style={styles.spriteImg}
         ></Image>
         <View style={styles.nameContainer}>
