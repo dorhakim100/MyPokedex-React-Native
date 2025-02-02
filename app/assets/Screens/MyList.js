@@ -45,7 +45,7 @@ function MyList({ navigation }) {
     removePokemon(pokemonId)
   }
   return (
-    <Screen>
+    <Screen hasNavigationBar={true}>
       {(myPokemons.length === 0 && (
         <CustomText style={styles.emptyList}>Add Pokemons first...</CustomText>
       )) || (

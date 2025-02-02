@@ -312,7 +312,7 @@ export default function AddScreen({ navigation }) {
   }
 
   return (
-    <Screen>
+    <Screen hasNavigationBar={true}>
       <UploadScreen
         progress={percentage}
         visible={uploadVisible}

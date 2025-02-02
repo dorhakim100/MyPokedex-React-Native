@@ -121,7 +121,7 @@ export default function SignupScreen({ navigation }) {
   }
 
   return (
-    <Screen style={styles.container}>
+    <Screen style={styles.container} hasNavigationBar={true}>
       <Image source={require('../imgs/pokeball.png')} style={styles.logo} />
 
       <CustomFormikForm

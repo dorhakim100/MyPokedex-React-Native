@@ -42,6 +42,7 @@ import colors from '../config/color'
 import paths from '../navigation/routes'
 import CustomText from '../cmps/CustomText'
 import CustomLottieAnimation from '../cmps/CustomLottieAnimation'
+import Screen from './Screen'
 
 import loader from '../animation/loader/loader.json'
 
@@ -148,7 +149,7 @@ function ListScreen({ navigation }) {
   }
 
   return (
-    <SafeAreaView style={{ flex: 1 }}>
+    <Screen>
       <KeyboardAvoidingView
         style={styles.container}
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
@@ -236,7 +237,7 @@ function ListScreen({ navigation }) {
           }
         /> */}
       </KeyboardAvoidingView>
-    </SafeAreaView>
+    </Screen>
   )
 }
 

@@ -6,12 +6,19 @@ import {
   StyleSheet,
 } from 'react-native'
 
+import CustomConnectionMessage from '../cmps/CustomConnectionMessage'
+
 import defaultStyles from '../config/styles'
 
-function Screen({ children }) {
+function Screen({ children, hasNavigationBar }) {
   return (
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
-      <SafeAreaView style={styles.screen}>{children}</SafeAreaView>
+      <SafeAreaView style={styles.screen}>
+        <>
+          <CustomConnectionMessage hasNavigationBar={hasNavigationBar} />
+          {children}
+        </>
+      </SafeAreaView>
     </TouchableWithoutFeedback>
   )
 }
