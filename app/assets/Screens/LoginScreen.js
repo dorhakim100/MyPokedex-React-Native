@@ -21,6 +21,8 @@ import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons'
 import AntDesign from '@expo/vector-icons/AntDesign'
 import MaterialIcons from '@expo/vector-icons/MaterialIcons'
 
+import authStorage from '../api/user/storage'
+
 import defaultStyles from '../config/styles'
 import { makeId } from '../services/utils'
 import paths from '../navigation/routes'
@@ -78,9 +80,10 @@ export default function LoginScreen({ navigation }) {
   async function onSubmit(values) {
     try {
       const res = await login(values)
-      console.log(res)
+
       if (!res.ok) return setLoginError(true)
       setLoginError(false)
+
       navigateToAccount()
     } catch (err) {
       console.log(err)
@@ -97,11 +100,13 @@ export default function LoginScreen({ navigation }) {
         onSubmit={onSubmit}
         values={values}
       />
-      {loginError && (
-        <CustomText style={defaultStyles.error}>
-          {errors[input.name]}
-        </CustomText>
-      )}
+      <View style={styles.errorContainer}>
+        {loginError && (
+          <CustomText style={defaultStyles.error}>
+            {'Wrong Username or Password'}
+          </CustomText>
+        )}
+      </View>
       <View style={styles.buttonContainer}>
         <Button title='Register first' onPress={navigateToSignup} />
       </View>
@@ -129,5 +134,8 @@ const styles = StyleSheet.create({
   button: {
     alignSelf: 'center',
     textAlign: 'center',
+  },
+  errorContainer: {
+    alignSelf: 'center',
   },
 })

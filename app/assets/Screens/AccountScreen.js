@@ -16,6 +16,7 @@ import CustomMap from '../cmps/CustomMap'
 import paths from '../navigation/routes'
 import { useSelector } from 'react-redux'
 import CustomButton from '../cmps/CustomButton'
+import { logout } from '../store/actions/user.actions'
 
 export default function AccountScreen({ navigation }) {
   const profile = {
@@ -47,6 +48,12 @@ export default function AccountScreen({ navigation }) {
     navigation.navigate(paths.SIGNUP)
   }
 
+  async function handleLogout() {
+    console.log('logging out')
+    await logout()
+    console.log(user)
+  }
+
   return (
     <Screen>
       {(user && (
@@ -62,7 +69,9 @@ export default function AccountScreen({ navigation }) {
               </React.Fragment>
             ))}
           </View>
-          <CustomListSection icon={<LogoutIcon />}>Log Out</CustomListSection>
+          <CustomListSection icon={<LogoutIcon />} onPress={handleLogout}>
+            Log Out
+          </CustomListSection>
         </>
       )) || (
         <View style={styles.loginButtonContainer}>

@@ -1,4 +1,4 @@
-import client from './client'
+import client from '../client'
 
 const login = (userCred) => client.post('/auth/login', userCred)
 

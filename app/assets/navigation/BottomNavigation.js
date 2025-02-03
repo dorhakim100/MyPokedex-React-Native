@@ -1,4 +1,5 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
+import { useSelector } from 'react-redux'
 import { View, StyleSheet } from 'react-native'
 
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
@@ -10,6 +11,8 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 import MaterialIcons from '@expo/vector-icons/MaterialIcons'
 import Feather from '@expo/vector-icons/Feather'
 import { FAB } from 'react-native-paper'
+
+import authStorage from '../api/user/storage'
 
 import ListScreen from '../Screens/ListScreen'
 import WelcomeScreen from '../Screens/WelcomeScreen'
@@ -26,6 +29,8 @@ import defaultStyles from '../config/styles'
 import NewListingButton from './NewListingButton'
 
 import paths from './routes'
+import { userService } from '../api/user/user'
+import { setRemembered } from '../store/actions/user.actions'
 
 const Tab = createBottomTabNavigator()
 const Stack = createStackNavigator()
@@ -220,9 +225,11 @@ const styles = StyleSheet.create({
 })
 
 export default function AppNavigator() {
+  const user = useSelector((stateSelector) => stateSelector.userModule.currUser)
+
   return (
     <Stack.Navigator
-      initialRouteName={paths.WELCOME} // Set the welcome screen as the initial screen
+      initialRouteName={user ? paths.MAIN : paths.WELCOME} // Set the welcome screen as the initial screen
       screenOptions={{ headerShown: true, headerTitle: '' }}
     >
       <Stack.Screen name={paths.WELCOME} component={WelcomeScreen} />

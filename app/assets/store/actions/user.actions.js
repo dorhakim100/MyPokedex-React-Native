@@ -1,4 +1,7 @@
-import { userService } from '../../api/user'
+import { jwtDecode } from 'jwt-decode'
+
+import { userService } from '../../api/user/user'
+import authStorage from '../../api/user/storage'
 
 import { store } from '../store'
 
@@ -32,8 +35,11 @@ export async function login(credentials) {
     const res = await userService.login(credentials)
     if (!res.ok) return res
 
-    const user = res.data
+    const { token } = res.data
 
+    await authStorage.storeToken(token)
+    const user = jwtDecode(token) // Decode token to extract user info
+    console.log(user)
     // const cart = [...user.items] || []
 
     // store.dispatch({ type: UPDATE_CART, cart: cart })
@@ -49,13 +55,15 @@ export async function login(credentials) {
   }
 }
 
-export function setRemembered(user) {
+export function setRemembered(token) {
+  const user = jwtDecode(token) // Decode token to extract user info
+
   store.dispatch({
     type: SET_USER,
-    user,
+    currUser: user,
   })
   if (user) {
-    store.dispatch({ type: UPDATE_CART, cart: user.items })
+    // store.dispatch({ type: UPDATE_CART, cart: user.items })
   }
 }
 
@@ -63,7 +71,10 @@ export async function signup(credentials) {
   try {
     const res = await userService.signup(credentials)
     if (!res.ok) return res
-    const user = res.data
+    const { token } = res.data
+    await authStorage.storeToken(token)
+    const user = jwtDecode(token) // Decode token to extract user info
+
     store.dispatch({
       type: SET_USER,
       currUser: user,
@@ -78,7 +89,7 @@ export async function signup(credentials) {
 
 export async function logout() {
   try {
-    await userService.logout()
+    await authStorage.removeToken()
     store.dispatch({
       type: SET_USER,
       user: null,

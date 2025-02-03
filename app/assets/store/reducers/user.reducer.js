@@ -1,4 +1,4 @@
-import { userService } from '../../api/user'
+import { userService } from '../../api/user/user'
 
 export const SET_USERS = 'SET_USERS'
 export const SET_USER = 'SET_USER'
