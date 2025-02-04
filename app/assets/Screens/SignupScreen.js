@@ -1,5 +1,6 @@
 import { Button, Image, StyleSheet, Text, View } from 'react-native'
 import React, { useState } from 'react'
+import { useSelector } from 'react-redux'
 
 import Screen from './Screen'
 import CustomTextInput from '../cmps/forms/CustomTextInput'
@@ -21,6 +22,10 @@ import { makeId } from '../services/utils'
 
 import paths from '../navigation/routes'
 import { signup } from '../store/actions/user.actions'
+import CustomLottieAnimation from '../cmps/CustomLottieAnimation'
+import { setIsLoading } from '../store/actions/system.actions'
+
+import loader from '../animation/loader/loader.json'
 
 const validationSchema = Yup.object().shape({
   fullname: Yup.string().required().min(2).label('Fullname'),
@@ -46,6 +51,9 @@ export default function SignupScreen({ navigation }) {
     phone: '',
   })
   const [signupError, setSignupError] = useState(false)
+  const isLoading = useSelector(
+    (stateSelector) => stateSelector.systemModule.isLoading
+  )
 
   const inputs = [
     {
@@ -119,15 +127,19 @@ export default function SignupScreen({ navigation }) {
   const navigateToLogin = () => navigation.replace(paths.LOGIN)
 
   async function onSubmit(values) {
-    console.log(values)
     try {
+      setIsLoading(true)
       const res = await signup({ ...values, isAdmin: false })
+      setIsLoading(false)
       if (!res.ok) return setSignupError(true)
       navigateToAccount()
     } catch (err) {
       console.log(err)
     }
   }
+
+  if (isLoading)
+    return <CustomLottieAnimation animation={loader} visible={isLoading} />
 
   return (
     <Screen style={styles.container} hasNavigationBar={true}>

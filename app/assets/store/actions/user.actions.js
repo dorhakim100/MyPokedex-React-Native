@@ -33,6 +33,7 @@ export async function removeUser(userId) {
 export async function login(credentials) {
   try {
     const res = await userService.login(credentials)
+
     if (!res.ok) return res
 
     const { token } = res.data

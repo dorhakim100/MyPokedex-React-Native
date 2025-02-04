@@ -7,6 +7,7 @@ import {
   KeyboardAvoidingView,
 } from 'react-native'
 import React, { useState } from 'react'
+import { useSelector } from 'react-redux'
 
 import * as Yup from 'yup'
 
@@ -15,6 +16,7 @@ import CustomTextInput from '../cmps/forms/CustomTextInput'
 import CustomButton from '../cmps/CustomButton'
 import CustomText from '../cmps/CustomText'
 import CustomFormikForm from '../cmps/forms/CustomFormikForm'
+import CustomLottieAnimation from '../cmps/CustomLottieAnimation'
 
 import Entypo from '@expo/vector-icons/Entypo'
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons'
@@ -27,6 +29,9 @@ import defaultStyles from '../config/styles'
 import { makeId } from '../services/utils'
 import paths from '../navigation/routes'
 import { login } from '../store/actions/user.actions'
+
+import loader from '../animation/loader/loader.json'
+import { setIsLoading } from '../store/actions/system.actions'
 
 const validationSchema = Yup.object().shape({
   username: Yup.string().required().min(2).label('Username'),
@@ -41,6 +46,10 @@ export default function LoginScreen({ navigation }) {
   })
 
   const [loginError, setLoginError] = useState(false)
+
+  const isLoading = useSelector(
+    (StateSelector) => StateSelector.systemModule.isLoading
+  )
 
   const inputs = [
     {
@@ -79,7 +88,9 @@ export default function LoginScreen({ navigation }) {
 
   async function onSubmit(values) {
     try {
+      setIsLoading(true)
       const res = await login(values)
+      setIsLoading(false)
 
       if (!res.ok) return setLoginError(true)
       setLoginError(false)
@@ -89,6 +100,9 @@ export default function LoginScreen({ navigation }) {
       console.log(err)
     }
   }
+
+  if (isLoading)
+    return <CustomLottieAnimation animation={loader} visible={isLoading} />
 
   return (
     <Screen style={styles.container} hasNavigationBar={true}>
