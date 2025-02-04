@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import {
   View,
   SafeAreaView,
@@ -10,7 +10,7 @@ import {
 } from 'react-native'
 
 import { useSelector } from 'react-redux'
-import { loadPokemon } from '../store/actions/pokemon.actions'
+import { loadPokemon, navPokemon } from '../store/actions/pokemon.actions'
 
 import Constants from 'expo-constants'
 
@@ -27,20 +27,31 @@ function DetailsScreen() {
   const currPokemon = useSelector(
     (stateSelector) => stateSelector.pokemonModule.currPokemon
   )
-  const pokemons = pokemonService.getPokemons()
+  const pokemons = useSelector(
+    (stateSelector) => stateSelector.pokemonModule.pokemons
+  )
+
+  const [index, setIndex] = useState()
+
+  useEffect(() => {
+    console.log(currPokemon)
+    const idx = pokemons.findIndex((pokemon) => pokemon._id === currPokemon._id)
+    console.log(idx)
+    setIndex(idx)
+  }, [currPokemon])
 
   return (
     <Screen>
       <View style={styles.prevNextButtons}>
         <CustomButton
-          handlePress={() => loadPokemon(--currPokemon._id)}
-          disabled={currPokemon.num === pokemons[0].num}
+          handlePress={async () => await navPokemon(index - 1)}
+          disabled={index === 0}
         >
           Previous
         </CustomButton>
         <CustomButton
-          handlePress={() => loadPokemon(++currPokemon._id)}
-          disabled={currPokemon.num === pokemons[pokemons.length - 1].num}
+          handlePress={async () => await navPokemon(index + 1)}
+          disabled={index === pokemons.length - 1}
         >
           Next
         </CustomButton>

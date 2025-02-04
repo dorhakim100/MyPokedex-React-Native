@@ -82,7 +82,7 @@ async function save(pokemon) {
 
 function getEmptyPokemon() {
   return {
-    _id: 1,
+    _id: '679b7b4f1d197b22a0ae6f00',
     num: 1,
     name: 'Bulbasaur',
     types: ['grass', 'poison'],
@@ -93,7 +93,8 @@ function getEmptyPokemon() {
         'https://archives.bulbagarden.net/media/upload/thumb/f/fb/0001Bulbasaur.png/500px-0001Bulbasaur.png',
       home: 'https://archives.bulbagarden.net/media/upload/thumb/9/9f/HOME0001.png/400px-HOME0001.png',
 
-      pixel: 'https://art.pixilart.com/20dc875b721fed5.png',
+      pixel:
+        'https://archives.bulbagarden.net/media/upload/a/ad/Spr_2g_001.png',
     },
     region: 'kanto',
   }

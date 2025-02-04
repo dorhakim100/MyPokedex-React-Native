@@ -38,12 +38,9 @@ export default function App() {
   const [isReady, setIsReady] = useState(false)
 
   useEffect(() => {
-    const loadApp = async () => {
+    const checkRemembered = async () => {
       try {
-        const token = await authStorage.getToken()
-        if (token) {
-          setRemembered(token)
-        }
+        const user = await authStorage.setRememberedUser()
       } catch (err) {
         console.log(err)
       } finally {
@@ -52,7 +49,7 @@ export default function App() {
       }
     }
 
-    loadApp()
+    checkRemembered()
   }, [])
 
   if (!isReady) {

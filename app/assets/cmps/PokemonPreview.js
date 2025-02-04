@@ -6,7 +6,7 @@ import {
   Button,
   Dimensions,
   Platform,
-  TouchableHighlight,
+  TouchableOpacity,
 } from 'react-native'
 import { Image } from 'react-native-expo-image-cache'
 
@@ -36,8 +36,8 @@ function PokemonPreview({
       onSwipeableOpen={() => onSwipeableOpen(pokemonRef)}
       ref={pokemonRef}
     >
-      <TouchableHighlight
-        underlayColor={defaultStyles.colors.blueHighlight}
+      <TouchableOpacity
+        // underlayColor={defaultStyles.colors.blueHighlight}
         onPress={() => setPokemon(pokemon._id)}
         style={styles.preview}
       >
@@ -59,7 +59,7 @@ function PokemonPreview({
             color={defaultStyles.colors.darkGray}
           />
         </View>
-      </TouchableHighlight>
+      </TouchableOpacity>
     </Swipeable>
   )
 }

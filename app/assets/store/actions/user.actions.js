@@ -63,6 +63,7 @@ export function setRemembered(token) {
     currUser: user,
   })
   if (user) {
+    return user
     // store.dispatch({ type: UPDATE_CART, cart: user.items })
   }
 }

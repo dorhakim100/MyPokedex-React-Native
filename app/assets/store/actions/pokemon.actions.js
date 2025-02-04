@@ -5,6 +5,7 @@ import {
   SET_POKEMONS,
   REMOVE_POKEMON,
   ADD_POKEMON,
+  ADD_NEW_POKEMON,
   SET_FILTER,
 } from '../reducers/pokemon.reducer'
 import { makeId } from '../../services/util.service'
@@ -73,13 +74,31 @@ export async function addPokemon(pokemonId) {
   }
 }
 
+export async function navPokemon(pokemonIndex) {
+  console.log(pokemonIndex)
+  const res = await pokemonService.query(pokemonService.getDefaultFilter())
+  if (!res.ok) throw res
+  const pokemons = res.data
+  const pokemon = pokemons[pokemonIndex]
+  try {
+    store.dispatch({
+      type: SET_POKEMON,
+      currPokemon: pokemon,
+    })
+    return pokemon
+  } catch (err) {
+    // console.log('Cannot load pokemon', err)
+    throw err
+  }
+}
+
 export async function addNewPokemon(pokemonToAdd, onProgress) {
   try {
     const res = await pokemonService.post(pokemonToAdd, onProgress)
     const savedPokemon = res.data
     store.dispatch({
-      type: ADD_POKEMON,
-      pokemonToAdd: savedPokemon,
+      type: ADD_NEW_POKEMON,
+      newPokemon: savedPokemon,
     })
     return savedPokemon
   } catch (err) {

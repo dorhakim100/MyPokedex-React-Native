@@ -119,25 +119,8 @@ function ListScreen({ navigation }) {
   }
   const [keyboardOffset, setKeyboardOffset] = useState(0)
 
-  // useEffect(() => {
-  //   const showSubscription = Keyboard.addListener(
-  //     'keyboardDidShow',
-  //     (event) => {
-  //       setKeyboardOffset(400) // Or any additional calculation based on your UI
-  //     }
-  //   )
-  //   const hideSubscription = Keyboard.addListener('keyboardDidHide', () => {
-  //     setKeyboardOffset(0) // Reset offset when keyboard is dismissed
-  //   })
-
-  //   return () => {
-  //     showSubscription.remove()
-  //     hideSubscription.remove()
-  //   }
-  // }, [])
-
-  const setPokemon = (pokemonId) => {
-    loadPokemon(pokemonId)
+  const setPokemon = async (pokemonId) => {
+    await loadPokemon(pokemonId)
     navigation.navigate(paths.DETAILS)
   }
 
@@ -192,51 +175,6 @@ function ListScreen({ navigation }) {
             swipeable={swipeable}
           />
         )}
-        {/* <ScrollView style={styles.scrollView}>
-          {pokemons.map((pokemon) => {
-            return (
-              <TouchableOpacity
-                key={pokemon.num}
-                onPress={() => setPokemon(pokemon._id)}
-                style={styles.preview}
-              >
-                <PokemonPreview pokemon={pokemon} />
-              </TouchableOpacity>
-            )
-          })}
-        </ScrollView> */}
-        {/* or using FlatList */}
-        {/* <FlatList
-          data={pokemons}
-          keyExtractor={(item) => item._id.toString()} // Ensure unique IDs
-          refreshing={isRefreshing}
-          onRefresh={() => {
-            loadPokemons(pokemonService.getDefaultFilter())
-          }}
-          renderItem={({ item }) => (
-            <PokemonPreview
-              pokemon={item}
-              renderRightAction={() => (
-                <ListItemSwipeAction
-                  onPress={() => handleDelete(item)}
-                  backgroundColor={colors.addGreen}
-                  icon={
-                    <Entypo
-                      name='add-to-list'
-                      size={24}
-                      color={colors.strongWhite}
-                    />
-                  }
-                />
-              )} // sending a function, not cmp
-              setPokemon={setPokemon}
-            />
-          )}
-          contentContainerStyle={styles.listContainer}
-          ItemSeparatorComponent={
-            <ListItemSeparator color={colors.secondaryBlueLight} />
-          }
-        /> */}
       </KeyboardAvoidingView>
     </Screen>
   )

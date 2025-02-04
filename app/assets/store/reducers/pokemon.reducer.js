@@ -4,6 +4,7 @@ export const SET_POKEMONS = 'SET_POKEMONS'
 export const SET_POKEMON = 'SET_POKEMON'
 export const REMOVE_POKEMON = 'REMOVE_POKEMON'
 export const ADD_POKEMON = 'ADD_POKEMON'
+export const ADD_NEW_POKEMON = 'ADD_NEW_POKEMON'
 export const SET_FILTER = 'SET_FILTER'
 
 const initialState = {
@@ -45,7 +46,15 @@ export function pokemonReducer(state = initialState, action) {
       newState = {
         ...state,
         myPokemons: [pokemonToAdd, ...pokemons],
-        pokemons: [...pokemons, pokemonToAdd],
+      }
+
+      break
+    case ADD_NEW_POKEMON:
+      const { newPokemon } = action
+
+      newState = {
+        ...state,
+        pokemons: [newPokemon, ...pokemons],
       }
 
       break

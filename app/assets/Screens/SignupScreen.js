@@ -45,6 +45,8 @@ export default function SignupScreen({ navigation }) {
     email: '',
     phone: '',
   })
+  const [signupError, setSignupError] = useState(false)
+
   const inputs = [
     {
       key: makeId(),
@@ -119,7 +121,8 @@ export default function SignupScreen({ navigation }) {
   async function onSubmit(values) {
     console.log(values)
     try {
-      await signup({ ...values, isAdmin: false })
+      const res = await signup({ ...values, isAdmin: false })
+      if (!res.ok) return setSignupError(true)
       navigateToAccount()
     } catch (err) {
       console.log(err)
@@ -137,6 +140,13 @@ export default function SignupScreen({ navigation }) {
         onSubmit={onSubmit}
         values={values}
       />
+      <View style={styles.errorContainer}>
+        {signupError && (
+          <CustomText style={defaultStyles.error}>
+            {'Username Email or Phone taken'}
+          </CustomText>
+        )}
+      </View>
       <View style={styles.buttonContainer}>
         <Button title='Already a member?' onPress={navigateToLogin} />
       </View>
@@ -153,5 +163,8 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     marginTop: 50,
     margin: 20,
+  },
+  errorContainer: {
+    alignSelf: 'center',
   },
 })
